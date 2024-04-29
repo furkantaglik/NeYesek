@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Castle.DynamicProxy;
 using Core.CrossCuttingConcerns.Caching;
 using Core.Utilites.Interceptors;
-using Microsoft.Extensions.DependencyInjection;
 using Core.Utilites.IoC;
-using Castle.DynamicProxy;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Core.Aspects.Autofac.Caching
+namespace Core.Aspects.Autofac.Caching;
+
+public class CacheRemoveAspect : MethodInterception
 {
-	public class CacheRemoveAspect : MethodInterception
+	private readonly ICacheManager _cacheManager;
+	private readonly string _pattern;
+
+	public CacheRemoveAspect(string pattern)
 	{
-		private string _pattern;
-		private ICacheManager _cacheManager;
+		_pattern = pattern;
+		_cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
+	}
 
-		public CacheRemoveAspect(string pattern)
-		{
-			_pattern = pattern;
-			_cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
-		}
-
-		protected override void OnSuccess(IInvocation invocation)
-		{
-			_cacheManager.RemoveByPattern(_pattern);
-		}
+	protected override void OnSuccess(IInvocation invocation)
+	{
+		_cacheManager.RemoveByPattern(_pattern);
 	}
 }

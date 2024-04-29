@@ -1,20 +1,14 @@
-﻿using Core.Utilites.Results;
-using Entities.Concrete;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Core.Entities.Concrete;
+using Core.Utilites.Results;
 
-namespace Business.Abstract
+namespace Business.Abstract;
+
+public interface IMenuService
 {
-	public interface IMenuService
-	{
-		IDataResult<List<Menu>> GetList();
-		IDataResult<Menu> GetById(int Id);
-		IDataResult<List<Menu>> GetByRestaurantId(int restaurantId);
-		IResult Add(Menu menu);
-		IResult Remove(Menu menu);
-		IResult Update(Menu menu);
-	}
+	IDataResult<List<Menu>> GetAll();
+	IDataResult<Menu> GetById(int Id);
+	IDataResult<List<Menu>> GetByRestaurantId(int restaurantId);
+	IResult Add(Menu menu);
+	IResult Remove(Menu menu);
+	IResult Update(Menu menu);
 }

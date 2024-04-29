@@ -1,19 +1,13 @@
-﻿using Core.Utilites.Results;
-using Entities.Concrete;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Core.Entities.Concrete;
+using Core.Utilites.Results;
 
-namespace Business.Abstract
+namespace Business.Abstract;
+
+public interface ICategoryService
 {
-	public interface ICategoryService
-	{
-		IDataResult<List<Category>> GetList();
-		IDataResult<Category> GetById(int Id);
-		IResult Add(Category category);
-		IResult Remove(Category category);
-		IResult Update(Category category);
-	}
+	IDataResult<List<Category>> GetAll();
+	IDataResult<Category> GetById(int Id);
+	IResult Add(Category category);
+	IResult Remove(Category category);
+	IResult Update(Category category);
 }

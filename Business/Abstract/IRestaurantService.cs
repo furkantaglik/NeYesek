@@ -1,20 +1,16 @@
 ﻿using Core.Entities.Concrete;
 using Core.Utilites.Results;
-using Entities.Concrete;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Entities.Concrete.DTOs.RestaurantDto;
 
-namespace Business.Abstract
+namespace Business.Abstract;
+
+internal interface IRestaurantService
 {
-	internal interface IRestaurantService
-	{
-		IDataResult<List<Restaurant>> GetList();
-		IDataResult<Restaurant> GetById(int Id);
-		IResult Add(Restaurant restaurant);
-		IResult Remove(Restaurant restaurant);
-		IResult Update(Restaurant restaurant);
-	}
+	IDataResult<List<Restaurant>> GetAll();
+	IDataResult<Restaurant> GetById(int Id);
+	List<RestaurantOperationClaim> GetRestaurantClaims();
+	IDataResult<List<RestaurantDetailDto>> GetRestaurantDetails();
+	IResult Add(Restaurant restaurant);
+	IResult Remove(Restaurant restaurant);
+	IResult Update(Restaurant restaurant);
 }

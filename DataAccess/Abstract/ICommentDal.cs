@@ -1,9 +1,8 @@
 ﻿using Core.DataAccess;
-using Entities.Concrete;
+using Core.Entities.Concrete;
 
-namespace DataAccess.Abstract
+namespace DataAccess.Abstract;
+
+public interface ICommentDal : IEntityRepository<Comment>
 {
-	public interface ICommentDal : IEntityRepository<Comment>
-	{
-	}
 }
