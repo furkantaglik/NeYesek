@@ -21,4 +21,13 @@ public class SqlContext : DbContext
 	{
 		optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=NeYesek;Trusted_Connection=true");
 	}
+	protected override void OnModelCreating(ModelBuilder modelBuilder)
+	{
+		//migration hatasını engellemek için cascade döngüsü davranışını değiştirir
+		modelBuilder.Entity<Comment>()
+		.HasOne(c => c.Restaurant)
+		.WithMany(r => r.Comments)
+		.OnDelete(DeleteBehavior.NoAction);
+
+	}
 }

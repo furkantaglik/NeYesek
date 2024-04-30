@@ -1,4 +1,5 @@
-﻿using Core.Entities.Concrete;
+﻿using Core.Entities.Abstract;
+using Core.Entities.Concrete;
 using Core.Extensions;
 using Core.Utilites.Security.Encryption;
 using Microsoft.Extensions.Configuration;
@@ -21,44 +22,102 @@ public class JwtHelper : ITokenHelper
 
 	public IConfiguration Configuration { get; }
 
-	public AccessToken CreateToken(User user, List<OperationClaim> operationClaims)
+	public AccessToken CreateToken(IEntity entity, List<OperationClaim> operationClaims)
 	{
-		_accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpiration);
-		var securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey);
-		var signingCredentials = SigningCredentialsHelper.CreateSigningCredentials(securityKey);
-		var jwt = CreateJwtSecurityToken(_tokenOptions, user, signingCredentials, operationClaims);
-		var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
-		var token = jwtSecurityTokenHandler.WriteToken(jwt);
-
-		return new AccessToken
+		if (entity is User user)
 		{
-			Token = token,
-			Expiration = _accessTokenExpiration
-		};
+			_accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpiration);
+			var securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey);
+			var signingCredentials = SigningCredentialsHelper.CreateSigningCredentials(securityKey);
+			var jwt = CreateJwtSecurityToken(_tokenOptions, user, signingCredentials, operationClaims);
+			var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
+			var token = jwtSecurityTokenHandler.WriteToken(jwt);
+
+			return new AccessToken
+			{
+				Token = token,
+				Expiration = _accessTokenExpiration
+			};
+		}
+		else if (entity is Restaurant restaurant)
+		{
+			_accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpiration);
+			var securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey);
+			var signingCredentials = SigningCredentialsHelper.CreateSigningCredentials(securityKey);
+			var jwt = CreateJwtSecurityToken(_tokenOptions, restaurant, signingCredentials, operationClaims);
+			var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
+			var token = jwtSecurityTokenHandler.WriteToken(jwt);
+
+			return new AccessToken
+			{
+				Token = token,
+				Expiration = _accessTokenExpiration
+			};
+		}
+		else
+		{
+			throw new ArgumentException("Entity type is not supported");
+		}
 	}
 
-	public JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions, User user,
+	public JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions, IEntity entity,
 		SigningCredentials signingCredentials, List<OperationClaim> operationClaims)
 	{
-		var jwt = new JwtSecurityToken(
-			tokenOptions.Issuer,
-			tokenOptions.Audience,
-			expires: _accessTokenExpiration,
-			notBefore: DateTime.Now,
-			claims: SetClaims(user, operationClaims),
-			signingCredentials: signingCredentials
-		);
-		return jwt;
+		if (entity is User user)
+		{
+			var jwt = new JwtSecurityToken(
+				tokenOptions.Issuer,
+				tokenOptions.Audience,
+				expires: _accessTokenExpiration,
+				notBefore: DateTime.Now,
+				claims: SetClaims(user, operationClaims),
+				signingCredentials: signingCredentials
+			);
+			return jwt;
+		}
+		else if (entity is Restaurant restaurant)
+		{
+			var jwt = new JwtSecurityToken(
+				tokenOptions.Issuer,
+				tokenOptions.Audience,
+				expires: _accessTokenExpiration,
+				notBefore: DateTime.Now,
+				claims: SetClaims(restaurant, operationClaims),
+				signingCredentials: signingCredentials
+			);
+			return jwt;
+		}
+		else
+		{
+			throw new ArgumentException("Entity type is not supported");
+		}
 	}
 
-	private IEnumerable<Claim> SetClaims(User user, List<OperationClaim> operationClaims)
+	private IEnumerable<Claim> SetClaims(IEntity entity, List<OperationClaim> operationClaims)
 	{
-		var claims = new List<Claim>();
-		claims.AddNameIdentifier(user.Id.ToString());
-		claims.AddEmail(user.Email);
-		claims.AddName($"{user.FirstName} {user.LastName}");
-		claims.AddRoles(operationClaims.Select(c => c.Name).ToArray());
+		if (entity is User user)
+		{
+			var claims = new List<Claim>();
+			claims.AddNameIdentifier(user.Id.ToString());
+			claims.AddEmail(user.Email);
+			claims.AddName($"{user.FirstName} {user.LastName}");
+			claims.AddRoles(operationClaims.Select(c => c.Name).ToArray());
 
-		return claims;
+			return claims;
+		}
+		else if (entity is Restaurant restaurant)
+		{
+			var claims = new List<Claim>();
+			claims.AddNameIdentifier(restaurant.Id.ToString());
+			claims.AddEmail(restaurant.Email);
+			claims.AddName($"{restaurant.Name}");
+			claims.AddRoles(operationClaims.Select(c => c.Name).ToArray());
+
+			return claims;
+		}
+		else
+		{
+			throw new ArgumentException("Entity type is not supported");
+		}
 	}
 }

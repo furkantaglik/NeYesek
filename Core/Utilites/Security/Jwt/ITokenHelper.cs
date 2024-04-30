@@ -1,8 +1,9 @@
-﻿using Core.Entities.Concrete;
+﻿using Core.Entities.Abstract;
+using Core.Entities.Concrete;
 
 namespace Core.Utilites.Security.Jwt;
 
 public interface ITokenHelper
 {
-	AccessToken CreateToken(User user, List<OperationClaim> operationClaims);
+	AccessToken CreateToken(IEntity entity, List<OperationClaim> operationClaims);
 }

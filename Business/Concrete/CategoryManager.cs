@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Core.Entities.Concrete;
 using Core.Utilites.Results;
+using Entities.Concrete.DTOs.CategoryDto;
 
 namespace Business.Concrete;
 
@@ -27,6 +28,11 @@ public class CategoryManager : ICategoryService
 	}
 
 	public IResult Update(Category category)
+	{
+		throw new NotImplementedException();
+	}
+
+	public IDataResult<CategoryDetailDto> GetCategoryDetails()
 	{
 		throw new NotImplementedException();
 	}

@@ -6,8 +6,7 @@ namespace Entities.Concrete.DTOs.MenuDto
 	public class MenuDetailDto : IDto
 	{
 		public List<Product> products { get; set; }
-		public string Name { get; set; }
-		public string Description { get; set; }
-		public decimal TotalPrice { get; set; }
+		public Restaurant restaurant { get; set; }
+		public Menu menu { get; set; }
 	}
 }
