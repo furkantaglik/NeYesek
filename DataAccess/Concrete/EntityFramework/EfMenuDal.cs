@@ -2,7 +2,6 @@
 using Core.Entities.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework.Context;
-using Entities.Concrete.DTOs.CommentDto;
 using Entities.Concrete.DTOs.MenuDto;
 
 namespace DataAccess.Concrete.EntityFramework;
@@ -24,11 +23,27 @@ public class EfMenuDal : EfEntityRepositoryBase<Menu, SqlContext>, IMenuDal
 		return result.ToList();
 	}
 
-	public List<MenuDetailDto> GetMenuDetailsByResturant(Restaurant restaurant)
+	public MenuDetailDto GetMenuDetail(int menuId)
+	{
+		using var context = new SqlContext();
+		var result = from m in context.Menus
+					 where menuId == m.Id
+					 select new MenuDetailDto
+					 {
+						 products = m.Products.ToList(),
+						 restaurant = m.Restaurant,
+						 menu = m,
+
+					 };
+
+		return result.FirstOrDefault();
+	}
+
+	public List<MenuDetailDto> GetMenuDetailsByRestaurant(int restaurantId)
 	{
 		using var context = new SqlContext();
 		var result = from menu in context.Menus
-					 where menu.Restaurant.Id == restaurant.Id
+					 where menu.Restaurant.Id == restaurantId
 					 select new MenuDetailDto
 					 {
 						 products = menu.Products,

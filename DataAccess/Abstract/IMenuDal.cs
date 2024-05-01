@@ -7,5 +7,6 @@ namespace DataAccess.Abstract;
 public interface IMenuDal : IEntityRepository<Menu>
 {
 	List<MenuDetailDto> GetAllMenuDetails();
-	List<MenuDetailDto> GetMenuDetailsByResturant(Restaurant restaurant);
+	MenuDetailDto GetMenuDetail(int menuId);
+	List<MenuDetailDto> GetMenuDetailsByRestaurant(int restaurantId);
 }

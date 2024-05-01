@@ -24,11 +24,25 @@ public class EfProductDal : EfEntityRepositoryBase<Product, SqlContext>, IProduc
 
 	}
 
-	public List<ProductDetailDto> GetProductDetailsByResturant(Restaurant restaurant)
+	public ProductDetailDto GetProductDetail(int productId)
+	{
+		using var context = new SqlContext();
+		var result = from p in context.Products
+					 where p.Id == productId
+					 select new ProductDetailDto
+					 {
+						 Product = p,
+						 Categories = p.Categories.ToList(),
+						 Restaurant = p.Restaurant,
+					 };
+		return result.FirstOrDefault();
+	}
+
+	public List<ProductDetailDto> GetProductDetailsByRestaurant(int restaurantId)
 	{
 		using var context = new SqlContext();
 		var result = from product in context.Products
-					 where product.Restaurant.Id == restaurant.Id
+					 where product.Restaurant.Id == restaurantId
 					 select new ProductDetailDto
 					 {
 						 Restaurant = product.Restaurant,

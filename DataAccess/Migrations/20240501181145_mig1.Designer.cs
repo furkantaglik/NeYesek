@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(SqlContext))]
-    [Migration("20240430130541_mig1")]
+    [Migration("20240501181145_mig1")]
     partial class mig1
     {
         /// <inheritdoc />
@@ -84,10 +84,10 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RestaurantId")
+                    b.Property<int?>("RestaurantId")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
@@ -158,9 +158,6 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("MenuId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -176,11 +173,24 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MenuId");
-
                     b.HasIndex("RestaurantId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Core.Entities.Concrete.ProductMenu", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MenuId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "MenuId");
+
+                    b.HasIndex("MenuId");
+
+                    b.ToTable("ProductMenu");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.Restaurant", b =>
@@ -313,6 +323,21 @@ namespace DataAccess.Migrations
                     b.ToTable("UserOperationClaims");
                 });
 
+            modelBuilder.Entity("MenuProduct", b =>
+                {
+                    b.Property<int>("MenuId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MenuId", "ProductsId");
+
+                    b.HasIndex("ProductsId");
+
+                    b.ToTable("MenuProduct");
+                });
+
             modelBuilder.Entity("CategoryProduct", b =>
                 {
                     b.HasOne("Core.Entities.Concrete.Category", null)
@@ -347,15 +372,11 @@ namespace DataAccess.Migrations
                 {
                     b.HasOne("Core.Entities.Concrete.Product", "Product")
                         .WithMany("Comments")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
 
                     b.HasOne("Core.Entities.Concrete.Restaurant", "Restaurant")
                         .WithMany("Comments")
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("RestaurantId");
 
                     b.HasOne("Core.Entities.Concrete.User", "User")
                         .WithMany("Comments")
@@ -373,7 +394,7 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Core.Entities.Concrete.Menu", b =>
                 {
                     b.HasOne("Core.Entities.Concrete.Restaurant", "Restaurant")
-                        .WithMany()
+                        .WithMany("Menus")
                         .HasForeignKey("RestaurantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -383,17 +404,31 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Core.Entities.Concrete.Product", b =>
                 {
-                    b.HasOne("Core.Entities.Concrete.Menu", null)
-                        .WithMany("Products")
-                        .HasForeignKey("MenuId");
-
                     b.HasOne("Core.Entities.Concrete.Restaurant", "Restaurant")
                         .WithMany("Products")
                         .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Restaurant");
+                });
+
+            modelBuilder.Entity("Core.Entities.Concrete.ProductMenu", b =>
+                {
+                    b.HasOne("Core.Entities.Concrete.Menu", "Menu")
+                        .WithMany("ProductMenu")
+                        .HasForeignKey("MenuId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entities.Concrete.Product", "Product")
+                        .WithMany("ProductMenu")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Menu");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Entities.Concrete.DTOs.RestaurantDto.RestaurantOperationClaim", b =>
@@ -434,19 +469,38 @@ namespace DataAccess.Migrations
                     b.Navigation("user");
                 });
 
+            modelBuilder.Entity("MenuProduct", b =>
+                {
+                    b.HasOne("Core.Entities.Concrete.Menu", null)
+                        .WithMany()
+                        .HasForeignKey("MenuId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entities.Concrete.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Core.Entities.Concrete.Menu", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("ProductMenu");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.Product", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("ProductMenu");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.Restaurant", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("Menus");
 
                     b.Navigation("Products");
                 });

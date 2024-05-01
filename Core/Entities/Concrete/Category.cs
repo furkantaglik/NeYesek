@@ -6,8 +6,8 @@ namespace Core.Entities.Concrete
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
-		public List<Restaurant> Restaurants { get; set; }
-		public List<Product> Products { get; set; }
+		public List<Restaurant>? Restaurants { get; set; }
+		public List<Product>? Products { get; set; }
 
 	}
 }

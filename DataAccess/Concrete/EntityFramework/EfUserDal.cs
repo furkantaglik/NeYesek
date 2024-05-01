@@ -33,11 +33,11 @@ public class EfUserDal : EfEntityRepositoryBase<User, SqlContext>, IUserDal
 		return result.ToList();
 	}
 
-	public UserDetailDto GetUserDetails(User user)
+	public UserDetailDto GetUserDetail(int userId)
 	{
 		using var context = new SqlContext();
 		var result = from u in context.Users
-					 where u.Id == user.Id
+					 where u.Id == userId
 					 select new UserDetailDto
 					 {
 						 Comments = u.Comments.ToList(),

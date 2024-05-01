@@ -23,11 +23,27 @@ public class EfCommentDal : EfEntityRepositoryBase<Comment, SqlContext>, ICommen
 		return result.ToList();
 	}
 
-	public List<CommentDetailDto> GetCommentDetailsByProduct(Product product)
+	public CommentDetailDto GetCommentDetail(int commentId)
+	{
+		using var context = new SqlContext();
+		var result = from c in context.Comments
+					 where c.Id == commentId
+					 select new CommentDetailDto
+					 {
+						 comment = c,
+						 restaurant = c.Restaurant,
+						 user = c.User,
+
+					 };
+
+		return result.FirstOrDefault();
+	}
+
+	public List<CommentDetailDto> GetCommentDetailsByProduct(int productId)
 	{
 		using var context = new SqlContext();
 		var result = from comment in context.Comments
-					 where comment.Product.Id == product.Id
+					 where comment.Product.Id == productId
 					 select new CommentDetailDto
 					 {
 						 comment = comment,
@@ -39,11 +55,11 @@ public class EfCommentDal : EfEntityRepositoryBase<Comment, SqlContext>, ICommen
 		return result.ToList();
 	}
 
-	public List<CommentDetailDto> GetCommentDetailsByResturant(Restaurant restaurant)
+	public List<CommentDetailDto> GetCommentDetailsByRestaurant(int restaurantId)
 	{
 		using var context = new SqlContext();
 		var result = from comment in context.Comments
-					 where comment.Restaurant.Id == restaurant.Id
+					 where comment.Restaurant.Id == restaurantId
 					 select new CommentDetailDto
 					 {
 						 comment = comment,

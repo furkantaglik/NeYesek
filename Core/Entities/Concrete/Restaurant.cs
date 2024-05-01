@@ -12,9 +12,9 @@ public class Restaurant : IEntity
 	public byte[] PasswordSalt { get; set; }
 	public byte[] PasswordHash { get; set; }
 	public bool Status { get; set; }
-	public List<Comment> Comments { get; set; }
-	public List<Category> Categories { get; set; }
-	public List<Product> Products { get; set; }
-	public List<Menu> Menus { get; set; }
+	public List<Comment>? Comments { get; set; }
+	public List<Category>? Categories { get; set; }
+	public List<Product>? Products { get; set; }
+	public List<Menu>? Menus { get; set; }
 
 }

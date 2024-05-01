@@ -8,6 +8,6 @@ public interface IRestaurantDal : IEntityRepository<Restaurant>
 {
 	List<OperationClaim> GetRestaurantClaims(Restaurant restaurant);
 	List<RestaurantDetailDto> GetAllRestaurantDetails();
-	RestaurantDetailDto GetRestaurantDetail(Restaurant restaurant);
+	RestaurantDetailDto GetRestaurantDetail(int restaurantId);
 
 }

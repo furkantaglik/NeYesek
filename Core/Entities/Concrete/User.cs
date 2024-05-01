@@ -13,5 +13,5 @@ public class User : IEntity
 	public byte[] PasswordSalt { get; set; }
 	public byte[] PasswordHash { get; set; }
 	public bool Status { get; set; }
-	public List<Comment> Comments { get; set; }
+	public List<Comment>? Comments { get; set; }
 }

@@ -21,13 +21,36 @@ public class SqlContext : DbContext
 	{
 		optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=NeYesek;Trusted_Connection=true");
 	}
+
+
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
-		//migration hatasını engellemek için cascade döngüsü davranışını değiştirir
+		//comment  
 		modelBuilder.Entity<Comment>()
-		.HasOne(c => c.Restaurant)
-		.WithMany(r => r.Comments)
-		.OnDelete(DeleteBehavior.NoAction);
+			.HasOne(c => c.Restaurant)
+			.WithMany(r => r.Comments)
+			.OnDelete(DeleteBehavior.ClientSetNull);
+
+		//product
+		modelBuilder.Entity<Product>()
+			.HasOne(p => p.Restaurant)
+			.WithMany(r => r.Products)
+			.OnDelete(DeleteBehavior.ClientSetNull);
+
+		//menu and product
+		modelBuilder.Entity<ProductMenu>()
+	   .HasKey(pm => new { pm.ProductId, pm.MenuId });
+
+
+		//modelBuilder.Entity<Comment>()
+		//	.HasOne(c => c.User)
+		//	.WithMany(u => u.Comments)
+		//	.OnDelete(DeleteBehavior.Cascade);
+
+		//modelBuilder.Entity<Comment>()
+		//	.HasOne(c => c.Product)
+		//	.WithMany(u => u.Comments)
+		//	.OnDelete(DeleteBehavior.Cascade);
 
 	}
 }

@@ -7,6 +7,7 @@ namespace DataAccess.Abstract;
 public interface ICommentDal : IEntityRepository<Comment>
 {
 	List<CommentDetailDto> GetAllCommentDetails();
-	List<CommentDetailDto> GetCommentDetailsByResturant(Restaurant restaurant);
-	List<CommentDetailDto> GetCommentDetailsByProduct(Product product);
+	CommentDetailDto GetCommentDetail(int commentId);
+	List<CommentDetailDto> GetCommentDetailsByRestaurant(int restaurantId);
+	List<CommentDetailDto> GetCommentDetailsByProduct(int productId);
 }

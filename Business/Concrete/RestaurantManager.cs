@@ -1,44 +1,69 @@
 ﻿using Business.Abstract;
 using Core.Entities.Concrete;
 using Core.Utilites.Results;
+using DataAccess.Abstract;
 using Entities.Concrete.DTOs.RestaurantDto;
 
 namespace Business.Concrete;
 
 public class RestaurantManager : IRestaurantService
 {
+	IRestaurantDal _restaurantDal;
+	public RestaurantManager(IRestaurantDal restaurantDal)
+	{
+		_restaurantDal = restaurantDal;
+	}
+
 	public IResult Add(Restaurant restaurant)
 	{
-		throw new NotImplementedException();
+		_restaurantDal.Add(restaurant);
+		return new SuccessResult("Restoran eklendi");
 	}
 
 	public IDataResult<List<Restaurant>> GetAll()
 	{
-		throw new NotImplementedException();
+		var data = _restaurantDal.GetAll();
+		return new SuccessDataResult<List<Restaurant>>();
+	}
+
+	public IDataResult<List<RestaurantDetailDto>> GetAllRestaurantDetails()
+	{
+		var data = _restaurantDal.GetAllRestaurantDetails();
+		return new SuccessDataResult<List<RestaurantDetailDto>>(data);
 	}
 
 	public IDataResult<Restaurant> GetById(int Id)
 	{
-		throw new NotImplementedException();
+		var data = _restaurantDal.Get(r => r.Id == Id);
+		return new SuccessDataResult<Restaurant>(data);
 	}
 
-	public List<RestaurantOperationClaim> GetRestaurantClaims()
+	public IDataResult<Restaurant> GetByMail(string Email)
 	{
-		throw new NotImplementedException();
+		var data = _restaurantDal.Get(r => r.Email == Email);
+		return new SuccessDataResult<Restaurant>(data);
 	}
 
-	public IDataResult<List<RestaurantDetailDto>> GetRestaurantDetails()
+	public List<OperationClaim> GetRestaurantClaims(Restaurant restaurant)
 	{
-		throw new NotImplementedException();
+		return _restaurantDal.GetRestaurantClaims(restaurant);
+	}
+
+	public IDataResult<RestaurantDetailDto> GetRestaurantDetail(int restaurantId)
+	{
+		var data = _restaurantDal.GetRestaurantDetail(restaurantId);
+		return new SuccessDataResult<RestaurantDetailDto>(data);
 	}
 
 	public IResult Remove(Restaurant restaurant)
 	{
-		throw new NotImplementedException();
+		_restaurantDal.Delete(restaurant);
+		return new SuccessResult("Restoran silindi");
 	}
 
 	public IResult Update(Restaurant restaurant)
 	{
-		throw new NotImplementedException();
+		_restaurantDal.Update(restaurant);
+		return new SuccessResult("Restoran güncellendi");
 	}
 }

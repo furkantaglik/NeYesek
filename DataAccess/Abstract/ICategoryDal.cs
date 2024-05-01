@@ -7,6 +7,7 @@ namespace DataAccess.Abstract;
 public interface ICategoryDal : IEntityRepository<Category>
 {
 	List<CategoryDetailDto> GetAllCategoryDetails();
-	List<CategoryDetailDto> GetCategoryDetailsByResturant(Restaurant restaurant);
-	List<CategoryDetailDto> GetCategoryDetailsByProduct(Product product);
+	CategoryDetailDto GetCategoryDetail(int categoryId);
+	List<CategoryDetailDto> GetCategoryDetailsByRestaurant(int restaurantId);
+	List<CategoryDetailDto> GetCategoryDetailsByProduct(int productId);
 }

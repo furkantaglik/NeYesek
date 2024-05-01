@@ -3,7 +3,6 @@ using Core.Entities.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework.Context;
 using Entities.Concrete.DTOs.CategoryDto;
-using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concrete.EntityFramework;
 
@@ -24,11 +23,27 @@ public class EfCategoryDal : EfEntityRepositoryBase<Category, SqlContext>, ICate
 		return result.ToList();
 	}
 
-	public List<CategoryDetailDto> GetCategoryDetailsByProduct(Product product)
+	public CategoryDetailDto GetCategoryDetail(int categoryId)
+	{
+		using var context = new SqlContext();
+		var result = from c in context.Categories
+					 where c.Id == categoryId
+					 select new CategoryDetailDto
+					 {
+						 Restaurants = c.Restaurants.ToList(),
+						 Products = c.Products.ToList(),
+						 Category = c,
+
+					 };
+
+		return result.FirstOrDefault();
+	}
+
+	public List<CategoryDetailDto> GetCategoryDetailsByProduct(int productId)
 	{
 		using var context = new SqlContext();
 		var result = from category in context.Categories
-					 where category.Products.Any(p => p.Id == product.Id)
+					 where category.Products.Any(p => p.Id == productId)
 					 select new CategoryDetailDto
 					 {
 						 Restaurants = category.Restaurants.ToList(),
@@ -39,11 +54,11 @@ public class EfCategoryDal : EfEntityRepositoryBase<Category, SqlContext>, ICate
 		return result.ToList();
 	}
 
-	public List<CategoryDetailDto> GetCategoryDetailsByResturant(Restaurant restaurant)
+	public List<CategoryDetailDto> GetCategoryDetailsByRestaurant(int restaurantId)
 	{
 		using var context = new SqlContext();
 		var result = from category in context.Categories
-					 where category.Products.Any(p => p.Id == restaurant.Id)
+					 where category.Products.Any(p => p.Id == restaurantId)
 					 select new CategoryDetailDto
 					 {
 						 Restaurants = category.Restaurants.ToList(),

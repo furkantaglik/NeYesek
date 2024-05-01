@@ -34,11 +34,11 @@ public class EfRestaurantDal : EfEntityRepositoryBase<Restaurant, SqlContext>, I
 		return result.ToList();
 	}
 
-	public RestaurantDetailDto GetRestaurantDetail(Restaurant restaurant)
+	public RestaurantDetailDto GetRestaurantDetail(int restaurantId)
 	{
 		using var context = new SqlContext();
 		var result = from r in context.Restaurants
-					 where r.Id == restaurant.Id
+					 where r.Id == restaurantId
 					 select new RestaurantDetailDto
 					 {
 						 Restaurant = r,
