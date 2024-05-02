@@ -1,3 +1,4 @@
+using Core.Extensions;
 using DataAccess.Concrete.EntityFramework.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,14 +13,23 @@ builder.Services.AddDbContext<SqlContext>();
 
 var app = builder.Build();
 
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }
+app.ConfigureCustomExceptionMiddleware();
+
+app.UseCors(builder => builder.WithOrigins("http://localhost:3000").AllowAnyHeader());
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
