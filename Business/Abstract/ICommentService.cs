@@ -4,7 +4,7 @@ using Entities.Concrete.DTOs.CommentDto;
 
 namespace Business.Abstract;
 
-internal interface ICommentService
+public interface ICommentService
 {
 
 	IDataResult<List<CommentDetailDto>> GetAllCommentDetails();
@@ -16,4 +16,5 @@ internal interface ICommentService
 	IDataResult<Comment> GetById(int Id);
 	IResult Add(Comment comment);
 	IResult Update(Comment comment);
+	IResult Remove(Comment comment);
 }
