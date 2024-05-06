@@ -22,8 +22,8 @@ public class AutofacBusinessModule : Module
 		builder.RegisterType<MenuManager>().As<IMenuService>();
 		builder.RegisterType<EfMenuDal>().As<IMenuDal>();
 
-		builder.RegisterType<CommentManager>().As<IMenuService>();
-		builder.RegisterType<EfCommentDal>().As<IMenuDal>();
+		builder.RegisterType<CommentManager>().As<ICommentService>();
+		builder.RegisterType<EfCommentDal>().As<ICommentDal>();
 
 		builder.RegisterType<RestaurantManager>().As<IRestaurantService>();
 		builder.RegisterType<EfRestaurantDal>().As<IRestaurantDal>();
@@ -33,6 +33,7 @@ public class AutofacBusinessModule : Module
 
 		builder.RegisterType<AuthManager>().As<IAuthService>();
 		builder.RegisterType<JwtHelper>().As<ITokenHelper>();
+
 
 		var assembly = Assembly.GetExecutingAssembly();
 

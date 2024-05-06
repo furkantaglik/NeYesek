@@ -1,6 +1,5 @@
 ﻿using Business.Abstract;
 using Core.Entities.Concrete;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -21,9 +20,9 @@ namespace WebAPI.Controllers
 			var result = _menuService.GetAll();
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getmenudetailsbyresturant")]
@@ -32,9 +31,9 @@ namespace WebAPI.Controllers
 			var result = _menuService.GetMenuDetailsByRestaurant(restaurantId);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getmenudetail")]
@@ -43,9 +42,9 @@ namespace WebAPI.Controllers
 			var result = _menuService.GetMenuDetail(menuId);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getallmenudetails")]
@@ -54,9 +53,9 @@ namespace WebAPI.Controllers
 			var result = _menuService.GetAllMenuDetails();
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getbyid")]
@@ -65,9 +64,9 @@ namespace WebAPI.Controllers
 			var result = _menuService.GetById(Id);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpPost("add")]
@@ -76,9 +75,9 @@ namespace WebAPI.Controllers
 			var result = _menuService.Add(menu);
 			if (result.Success)
 			{
-				return Ok(result.Message);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpPost("update")]
@@ -87,9 +86,9 @@ namespace WebAPI.Controllers
 			var result = _menuService.Update(menu);
 			if (result.Success)
 			{
-				return Ok(result.Message);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpPost("remove")]
@@ -98,9 +97,9 @@ namespace WebAPI.Controllers
 			var result = _menuService.Remove(menu);
 			if (result.Success)
 			{
-				return Ok(result.Message);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 	}
 }

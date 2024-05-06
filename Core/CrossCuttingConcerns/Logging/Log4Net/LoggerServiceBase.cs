@@ -13,7 +13,7 @@ public class LoggerServiceBase
 	public LoggerServiceBase(string name)
 	{
 		var xmlDocument = new XmlDocument();
-		xmlDocument.Load(File.OpenRead("log4net.config"));
+		//xmlDocument.Load(File.OpenRead("log4net.config"));
 
 		var loggerRepository = LogManager.CreateRepository(Assembly.GetEntryAssembly(),
 			typeof(Hierarchy));

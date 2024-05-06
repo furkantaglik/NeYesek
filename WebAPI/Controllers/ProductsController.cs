@@ -21,9 +21,9 @@ namespace WebAPI.Controllers
 			var result = _productService.GetAll();
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getallproductdetails")]
@@ -32,9 +32,9 @@ namespace WebAPI.Controllers
 			var result = _productService.GetAllProductDetails();
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getbyid")]
@@ -43,9 +43,9 @@ namespace WebAPI.Controllers
 			var result = _productService.GetById(Id);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getproductdetailsbyrestaurant")]
@@ -54,9 +54,9 @@ namespace WebAPI.Controllers
 			var result = _productService.GetProductDetailsByRestaurant(restaurantId);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getproductdetail")]
@@ -65,9 +65,9 @@ namespace WebAPI.Controllers
 			var result = _productService.GetProductDetail(productId);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getbyrestaurantid")]
@@ -76,9 +76,9 @@ namespace WebAPI.Controllers
 			var result = _productService.GetByRestaurantId(restaurantId);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getbycategoryid")]
@@ -87,9 +87,9 @@ namespace WebAPI.Controllers
 			var result = _productService.GetByCategoryId(categoryId);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpPost("add")]
@@ -98,9 +98,9 @@ namespace WebAPI.Controllers
 			var result = _productService.Add(product);
 			if (result.Success)
 			{
-				return Ok(result.Message);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpPost("update")]
@@ -109,9 +109,9 @@ namespace WebAPI.Controllers
 			var result = _productService.Update(product);
 			if (result.Success)
 			{
-				return Ok(result.Message);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpPost("remove")]
@@ -120,9 +120,9 @@ namespace WebAPI.Controllers
 			var result = _productService.Remove(product);
 			if (result.Success)
 			{
-				return Ok(result.Message);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 	}
 }

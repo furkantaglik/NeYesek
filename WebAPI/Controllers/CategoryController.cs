@@ -1,6 +1,5 @@
 ﻿using Business.Abstract;
 using Core.Entities.Concrete;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -18,12 +17,12 @@ namespace WebAPI.Controllers
 		[HttpGet("getall")]
 		public IActionResult GetAll()
 		{
-			var result= _categoryService.GetAll();
-			if(result.Success)
+			var result = _categoryService.GetAll();
+			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getcategorydetailsbyproduct")]
@@ -32,9 +31,9 @@ namespace WebAPI.Controllers
 			var result = _categoryService.GetCategoryDetailsByProduct(productId);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getcategorydetailsbyresturant")]
@@ -43,9 +42,9 @@ namespace WebAPI.Controllers
 			var result = _categoryService.GetCategoryDetailsByResturant(restaurantId);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getcategorydetail")]
@@ -54,9 +53,9 @@ namespace WebAPI.Controllers
 			var result = _categoryService.GetCategoryDetail(categoryId);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getallcategorydetails")]
@@ -65,9 +64,9 @@ namespace WebAPI.Controllers
 			var result = _categoryService.GetAllCategoryDetails();
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getbyid")]
@@ -76,9 +75,9 @@ namespace WebAPI.Controllers
 			var result = _categoryService.GetById(Id);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpPost("add")]
@@ -87,9 +86,9 @@ namespace WebAPI.Controllers
 			var result = _categoryService.Add(category);
 			if (result.Success)
 			{
-				return Ok(result.Message);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpPost("update")]
@@ -98,9 +97,9 @@ namespace WebAPI.Controllers
 			var result = _categoryService.Update(category);
 			if (result.Success)
 			{
-				return Ok(result.Message);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpPost("remove")]
@@ -109,9 +108,9 @@ namespace WebAPI.Controllers
 			var result = _categoryService.Remove(category);
 			if (result.Success)
 			{
-				return Ok(result.Message);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 	}
 }

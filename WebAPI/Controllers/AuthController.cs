@@ -22,16 +22,16 @@ namespace WebAPI.Controllers
 			var userToLogin = _authService.UserLogin(userForLoginDto);
 			if (!userToLogin.Success)
 			{
-				return BadRequest(userToLogin.Message);
+				return BadRequest(userToLogin);
 			}
 
 			var result = _authService.CreateAccessTokenForUser(userToLogin.Data);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
 
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpPost("userregister")]
@@ -40,17 +40,17 @@ namespace WebAPI.Controllers
 			var userExists = _authService.UserExists(userForRegisterDto.Email);
 			if (!userExists.Success)
 			{
-				return BadRequest(userExists.Message);
+				return BadRequest(userExists);
 			}
 
 			var registerResult = _authService.UserRegister(userForRegisterDto, userForRegisterDto.Password);
 			var result = _authService.CreateAccessTokenForUser(registerResult.Data);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
 
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		//-----------------------------------------------------------------------------
@@ -62,17 +62,17 @@ namespace WebAPI.Controllers
 			var restaurantExists = _authService.RestaurantExists(restaurantForRegisterDto.Email);
 			if (!restaurantExists.Success)
 			{
-				return BadRequest(restaurantExists.Message);
+				return BadRequest(restaurantExists);
 			}
 
 			var registerResult = _authService.RestaurantRegister(restaurantForRegisterDto, restaurantForRegisterDto.Password);
 			var result = _authService.CreateAccessTokenForRestaurant(registerResult.Data);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
 
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpPost("restaurantlogin")]
@@ -81,16 +81,16 @@ namespace WebAPI.Controllers
 			var restaurantToLogin = _authService.RestaurantLogin(restaurantForLoginDto);
 			if (!restaurantToLogin.Success)
 			{
-				return BadRequest(restaurantToLogin.Message);
+				return BadRequest(restaurantToLogin);
 			}
 
 			var result = _authService.CreateAccessTokenForRestaurant(restaurantToLogin.Data);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
 
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 	}
 }

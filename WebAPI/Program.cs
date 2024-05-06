@@ -1,3 +1,6 @@
+using Autofac.Extensions.DependencyInjection;
+using Autofac;
+using Business.DependencyResolvers.Autofac;
 using Core.Extensions;
 using DataAccess.Concrete.EntityFramework.Context;
 
@@ -10,6 +13,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<SqlContext>();
+
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
+			   .ConfigureContainer<ContainerBuilder>(builder =>
+			   {
+
+				   builder.RegisterModule(new AutofacBusinessModule());
+
+
+			   });
 
 var app = builder.Build();
 

@@ -1,6 +1,5 @@
 ﻿using Business.Abstract;
 using Core.Entities.Concrete;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -21,9 +20,9 @@ namespace WebAPI.Controllers
 			var result = _userService.GetAll();
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getuserdetail")]
@@ -32,9 +31,9 @@ namespace WebAPI.Controllers
 			var result = _userService.GetUserDetail(userId);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getalluserdetails")]
@@ -43,9 +42,9 @@ namespace WebAPI.Controllers
 			var result = _userService.GetAllUserDetails();
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getbyid")]
@@ -54,9 +53,9 @@ namespace WebAPI.Controllers
 			var result = _userService.GetById(Id);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getbymail")]
@@ -65,9 +64,9 @@ namespace WebAPI.Controllers
 			var result = _userService.GetByMail(email);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpPost("add")]
@@ -76,9 +75,9 @@ namespace WebAPI.Controllers
 			var result = _userService.Add(user);
 			if (result.Success)
 			{
-				return Ok(result.Message);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpPost("update")]
@@ -87,9 +86,9 @@ namespace WebAPI.Controllers
 			var result = _userService.Update(user);
 			if (result.Success)
 			{
-				return Ok(result.Message);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpPost("remove")]
@@ -98,9 +97,9 @@ namespace WebAPI.Controllers
 			var result = _userService.Remove(user);
 			if (result.Success)
 			{
-				return Ok(result.Message);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 	}
 }

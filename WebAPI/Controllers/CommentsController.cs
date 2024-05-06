@@ -1,6 +1,5 @@
 ﻿using Business.Abstract;
 using Core.Entities.Concrete;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -21,9 +20,9 @@ namespace WebAPI.Controllers
 			var result = _commentService.GetAll();
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getcommentdetailsbyproduct")]
@@ -32,9 +31,9 @@ namespace WebAPI.Controllers
 			var result = _commentService.GetCommentDetailsByProduct(productId);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getcommentdetailsbyresturant")]
@@ -43,9 +42,9 @@ namespace WebAPI.Controllers
 			var result = _commentService.GetCommentDetailsByRestaurant(restaurantId);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getcommentdetail")]
@@ -54,9 +53,9 @@ namespace WebAPI.Controllers
 			var result = _commentService.GetCommentDetail(commentId);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getallcommentdetails")]
@@ -65,9 +64,9 @@ namespace WebAPI.Controllers
 			var result = _commentService.GetAllCommentDetails();
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getbyid")]
@@ -76,9 +75,9 @@ namespace WebAPI.Controllers
 			var result = _commentService.GetById(Id);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpPost("add")]
@@ -87,9 +86,9 @@ namespace WebAPI.Controllers
 			var result = _commentService.Add(comment);
 			if (result.Success)
 			{
-				return Ok(result.Message);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpPost("update")]
@@ -98,9 +97,9 @@ namespace WebAPI.Controllers
 			var result = _commentService.Update(comment);
 			if (result.Success)
 			{
-				return Ok(result.Message);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpPost("remove")]
@@ -109,9 +108,9 @@ namespace WebAPI.Controllers
 			var result = _commentService.Remove(comment);
 			if (result.Success)
 			{
-				return Ok(result.Message);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 	}
 }

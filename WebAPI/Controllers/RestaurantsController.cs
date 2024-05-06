@@ -20,9 +20,9 @@ namespace WebAPI.Controllers
 			var result = _restaurantService.GetAll();
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getallrestaurantdetails")]
@@ -31,9 +31,9 @@ namespace WebAPI.Controllers
 			var result = _restaurantService.GetAllRestaurantDetails();
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpGet("getrestaurantdetail")]
@@ -42,9 +42,9 @@ namespace WebAPI.Controllers
 			var result = _restaurantService.GetRestaurantDetail(restaurantId);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 
@@ -54,9 +54,9 @@ namespace WebAPI.Controllers
 			var result = _restaurantService.GetById(Id);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 
@@ -66,9 +66,9 @@ namespace WebAPI.Controllers
 			var result = _restaurantService.GetByMail(mail);
 			if (result.Success)
 			{
-				return Ok(result.Data);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpPost("add")]
@@ -77,9 +77,9 @@ namespace WebAPI.Controllers
 			var result = _restaurantService.Add(restaurant);
 			if (result.Success)
 			{
-				return Ok(result.Message);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpPost("update")]
@@ -88,9 +88,9 @@ namespace WebAPI.Controllers
 			var result = _restaurantService.Update(restaurant);
 			if (result.Success)
 			{
-				return Ok(result.Message);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 
 		[HttpPost("remove")]
@@ -99,9 +99,9 @@ namespace WebAPI.Controllers
 			var result = _restaurantService.Remove(restaurant);
 			if (result.Success)
 			{
-				return Ok(result.Message);
+				return Ok(result);
 			}
-			return BadRequest(result.Message);
+			return BadRequest(result);
 		}
 	}
 }
