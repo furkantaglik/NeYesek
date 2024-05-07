@@ -36,7 +36,8 @@ public class AuthManager : IAuthService
 
 	public IResult RestaurantExists(string email)
 	{
-		if (_restaurantService.GetByMail(email) != null)
+		var data = _restaurantService.GetByMail(email).Data;
+		if (data != null)
 		{
 			return new ErrorDataResult<Restaurant>("Restorant zaten mevcut");
 		}
@@ -47,7 +48,7 @@ public class AuthManager : IAuthService
 	{
 		var restaurantToCheck = _restaurantService.GetByMail(restaurantForLoginDto.Email);
 
-		if (restaurantToCheck == null)
+		if (restaurantToCheck.Data == null)
 		{
 			return new ErrorDataResult<Restaurant>("Restorant Bulunamadı");
 		}
@@ -92,7 +93,7 @@ public class AuthManager : IAuthService
 	{
 		var userToCheck = _userService.GetByMail(userForLoginDto.Email);
 
-		if (userToCheck == null)
+		if (userToCheck.Data == null)
 		{
 			return new ErrorDataResult<User>("Kullanıcı Bulunamadı");
 		}

@@ -11,7 +11,7 @@ namespace Core.Utilites.Security.Jwt;
 
 public class JwtHelper : ITokenHelper
 {
-	private readonly TokenOptions _tokenOptions;
+	private TokenOptions _tokenOptions;
 	private DateTime _accessTokenExpiration;
 
 	public JwtHelper(IConfiguration configuration)
@@ -35,6 +35,7 @@ public class JwtHelper : ITokenHelper
 
 			return new AccessToken
 			{
+				UserId = user.Id,
 				Token = token,
 				Expiration = _accessTokenExpiration
 			};
@@ -50,6 +51,7 @@ public class JwtHelper : ITokenHelper
 
 			return new AccessToken
 			{
+				RestaurantId = restaurant.Id,
 				Token = token,
 				Expiration = _accessTokenExpiration
 			};
@@ -84,6 +86,7 @@ public class JwtHelper : ITokenHelper
 				notBefore: DateTime.Now,
 				claims: SetClaims(restaurant, operationClaims),
 				signingCredentials: signingCredentials
+			
 			);
 			return jwt;
 		}
