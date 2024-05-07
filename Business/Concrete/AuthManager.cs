@@ -80,7 +80,8 @@ public class AuthManager : IAuthService
 
 	public IResult UserExists(string email)
 	{
-		if (_userService.GetByMail(email) != null)
+		var data = _userService.GetByMail(email).Data;
+		if (data != null)
 		{
 			return new ErrorDataResult<User>("Kullanıcı zaten mevcut");
 		}

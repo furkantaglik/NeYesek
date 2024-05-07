@@ -34,6 +34,9 @@ public class AutofacBusinessModule : Module
 		builder.RegisterType<AuthManager>().As<IAuthService>();
 		builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 
+		builder.RegisterType<UserManager>().As<IUserService>();
+		builder.RegisterType<EfUserDal>().As<IUserDal>();
+
 
 		var assembly = Assembly.GetExecutingAssembly();
 
