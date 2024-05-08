@@ -38,9 +38,9 @@ namespace WebAPI.Controllers.ImageControllers
 		}
 
 		[HttpGet("getimagebycategoryid")]
-		public IActionResult GetImageByCategoryId(int categoryİd)
+		public IActionResult GetImageByCategoryId(int categoryId)
 		{
-			var result = _categoryImageService.GetImageByCategoryId(categoryİd);
+			var result = _categoryImageService.GetImageByCategoryId(categoryId);
 			if (!result.Success)
 			{
 				return BadRequest(result);

@@ -20,14 +20,15 @@ namespace Business.Concrete.ImageManagers
 
 		public IResult Add(IFormFile file, MenuImage menuImage)
 		{
-			menuImage.ImagePath = _fileHelper.Upload(file, PathConstant.MenuImagesPath + menuImage.Menu + "\\");
+
+			menuImage.ImagePath = _fileHelper.Upload(file, PathConstant.MenuImagesPath);
 			_menuImageDal.Add(menuImage);
 			return new SuccessResult("Menü resmi eklendi");
 		}
 
-		public IDataResult<MenuImage> GetImageByMenuId(int categoryId)
+		public IDataResult<MenuImage> GetImageByMenuId(int menuId)
 		{
-			return new SuccessDataResult<MenuImage>(_menuImageDal.Get(x => x.Menu.Id == categoryId));
+			return new SuccessDataResult<MenuImage>(_menuImageDal.Get(x => x.Menu.Id == menuId));
 		}
 
 		public IDataResult<List<MenuImage>> GetAll()
@@ -42,14 +43,14 @@ namespace Business.Concrete.ImageManagers
 
 		public IResult Remove(MenuImage menuImage)
 		{
-			_fileHelper.Delete(PathConstant.RestaurantImagesPath + menuImage.Menu + "\\" + menuImage.ImagePath);
+			_fileHelper.Delete(PathConstant.MenuImagesPath + menuImage.ImagePath);
 			_menuImageDal.Delete(menuImage);
 			return new SuccessResult("Menü resmi silindi");
 		}
 
 		public IResult Update(IFormFile file, MenuImage menuImage)
 		{
-			menuImage.ImagePath = _fileHelper.Update(file, PathConstant.RestaurantImagesPath + menuImage.Menu + "\\" + menuImage.ImagePath, PathConstant.MenuImagesPath + menuImage.Menu + "\\");
+			menuImage.ImagePath = _fileHelper.Update(file, PathConstant.MenuImagesPath +  menuImage.ImagePath, PathConstant.MenuImagesPath);
 			_menuImageDal.Update(menuImage);
 			return new SuccessResult("Menü resmi güncellendi");
 		}

@@ -2,9 +2,9 @@
 {
 	public class PathConstant
 	{
-		public static string RestaurantImagesPath = "C:\\Images\\Restaurant\\";
-		public static string CategoryImagesPath = "C:\\Images\\Category\\";
-		public static string MenuImagesPath = "C:\\Images\\Menu\\";
-		public static string ProductImagesPath = "C:\\Images\\Product\\";
+		public static string RestaurantImagesPath = "wwwroot\\Images\\Restaurant\\";
+		public static string CategoryImagesPath = "wwwroot\\Images\\Category\\";
+		public static string MenuImagesPath = "wwwroot\\Images\\Menu\\";
+		public static string ProductImagesPath = "wwwroot\\Images\\Product\\";
 	}
 }

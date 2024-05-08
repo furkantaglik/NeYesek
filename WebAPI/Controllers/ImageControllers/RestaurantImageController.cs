@@ -38,9 +38,9 @@ namespace WebAPI.Controllers.ImageControllers
 		}
 
 		[HttpGet("getimagebyrestaurantid")]
-		public IActionResult GetImageByRestaurantId(int restaurantİd)
+		public IActionResult GetImageByRestaurantId(int restaurantId)
 		{
-			var result = _restaurantImageService.GetImageByRestaurantId(restaurantİd);
+			var result = _restaurantImageService.GetImageByRestaurantId(restaurantId);
 			if (!result.Success)
 			{
 				return BadRequest(result);

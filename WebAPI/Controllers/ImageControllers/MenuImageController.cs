@@ -12,10 +12,9 @@ namespace WebAPI.Controllers.ImageControllers
 		IMenuImageService _menuImageService;
 		private readonly IMapper _mapper;
 
-		public MenuImageController(IMenuImageService menuImageService, IMapper mapper)
+		public MenuImageController(IMenuImageService menuImageService)
 		{
 			_menuImageService = menuImageService;
-			_mapper = mapper;
 		}
 
 		[HttpGet("getall")]
@@ -41,9 +40,9 @@ namespace WebAPI.Controllers.ImageControllers
 		}
 
 		[HttpGet("getimagebymenuid")]
-		public IActionResult GetImageByMenuId(int menuİd)
+		public IActionResult GetImageByMenuId(int menuId)
 		{
-			var result = _menuImageService.GetImageByMenuId(menuİd);
+			var result = _menuImageService.GetImageByMenuId(menuId);
 			if (!result.Success)
 			{
 				return BadRequest(result);

@@ -5,6 +5,7 @@ using Business.Abstract.ImageServices;
 using Business.Concrete;
 using Business.Concrete.ImageManagers;
 using Castle.DynamicProxy;
+using Core.Utilites.FileHelper;
 using Core.Utilites.Interceptors;
 using Core.Utilites.Security.Jwt;
 using DataAccess.Abstract;
@@ -40,6 +41,8 @@ public class AutofacBusinessModule : Module
 		builder.RegisterType<EfUserDal>().As<IUserDal>();
 
 		//images
+		builder.RegisterType<FileHelper>().As<IFileHelper>();
+
 		builder.RegisterType<MenuImageManager>().As<IMenuImageService>();
 		builder.RegisterType<EfMenuImageDal>().As<IMenuImageDal>();
 

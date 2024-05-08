@@ -20,9 +20,10 @@ namespace Business.Concrete.ImageManagers
 
 		public IResult Add(IFormFile file, RestaurantImage restaurantImage)
 		{
-			restaurantImage.ImagePath = _fileHelper.Upload(file, PathConstant.RestaurantImagesPath + restaurantImage.Restaurant.Id + "\\");
+
+			restaurantImage.ImagePath = _fileHelper.Upload(file, PathConstant.RestaurantImagesPath);
 			_restaurantImageDal.Add(restaurantImage);
-			return new SuccessResult("Restorant resmi eklendi");
+			return new SuccessResult("Menü resmi eklendi");
 		}
 
 		public IDataResult<RestaurantImage> GetImageByRestaurantId(int restaurantId)
@@ -42,16 +43,16 @@ namespace Business.Concrete.ImageManagers
 
 		public IResult Remove(RestaurantImage restaurantImage)
 		{
-			_fileHelper.Delete(PathConstant.RestaurantImagesPath + restaurantImage.Restaurant.Id + "\\" + restaurantImage.ImagePath);
+			_fileHelper.Delete(PathConstant.RestaurantImagesPath + restaurantImage.ImagePath);
 			_restaurantImageDal.Delete(restaurantImage);
-			return new SuccessResult("Restorant resmi silindi");
+			return new SuccessResult("Menü resmi silindi");
 		}
 
 		public IResult Update(IFormFile file, RestaurantImage restaurantImage)
 		{
-			restaurantImage.ImagePath = _fileHelper.Update(file, PathConstant.RestaurantImagesPath + restaurantImage.Restaurant.Id + "\\" + restaurantImage.ImagePath, PathConstant.RestaurantImagesPath + restaurantImage.Restaurant.Id + "\\");
+			restaurantImage.ImagePath = _fileHelper.Update(file, PathConstant.RestaurantImagesPath + restaurantImage.ImagePath, PathConstant.RestaurantImagesPath);
 			_restaurantImageDal.Update(restaurantImage);
-			return new SuccessResult("Restorant resmi güncellendi");
+			return new SuccessResult("Menü resmi güncellendi");
 		}
 	}
 }

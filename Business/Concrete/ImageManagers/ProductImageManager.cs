@@ -20,14 +20,15 @@ namespace Business.Concrete.ImageManagers
 
 		public IResult Add(IFormFile file, ProductImage productImage)
 		{
-			productImage.ImagePath = _fileHelper.Upload(file, PathConstant.ProductImagesPath + productImage.Product.Id + "\\");
+
+			productImage.ImagePath = _fileHelper.Upload(file, PathConstant.ProductImagesPath);
 			_productImageDal.Add(productImage);
-			return new SuccessResult("Ürün resmi eklendi");
+			return new SuccessResult("Menü resmi eklendi");
 		}
 
-		public IDataResult<ProductImage> GetImageByProductId(int categoryId)
+		public IDataResult<ProductImage> GetImageByProductId(int productId)
 		{
-			return new SuccessDataResult<ProductImage>(_productImageDal.Get(x => x.Product.Id == categoryId));
+			return new SuccessDataResult<ProductImage>(_productImageDal.Get(x => x.Product.Id == productId));
 		}
 
 		public IDataResult<List<ProductImage>> GetAll()
@@ -42,16 +43,16 @@ namespace Business.Concrete.ImageManagers
 
 		public IResult Remove(ProductImage productImage)
 		{
-			_fileHelper.Delete(PathConstant.RestaurantImagesPath + productImage.Product.Id + "\\" + productImage.ImagePath);
+			_fileHelper.Delete(PathConstant.ProductImagesPath + productImage.ImagePath);
 			_productImageDal.Delete(productImage);
-			return new SuccessResult("Ürün resmi silindi");
+			return new SuccessResult("Menü resmi silindi");
 		}
 
 		public IResult Update(IFormFile file, ProductImage productImage)
 		{
-			productImage.ImagePath = _fileHelper.Update(file, PathConstant.RestaurantImagesPath + productImage.Product.Id + "\\" + productImage.ImagePath, PathConstant.ProductImagesPath + productImage.Product.Id + "\\");
+			productImage.ImagePath = _fileHelper.Update(file, PathConstant.ProductImagesPath + productImage.ImagePath, PathConstant.ProductImagesPath);
 			_productImageDal.Update(productImage);
-			return new SuccessResult("Ürün resmi güncellendi");
+			return new SuccessResult("Menü resmi güncellendi");
 		}
 	}
 }

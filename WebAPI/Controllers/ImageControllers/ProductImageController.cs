@@ -38,9 +38,9 @@ namespace WebAPI.Controllers.ImageControllers
 		}
 
 		[HttpGet("getimagebyproductid")]
-		public IActionResult GetImageByProductId(int productİd)
+		public IActionResult GetImageByProductId(int productId)
 		{
-			var result = _productImageService.GetImageByProductId(productİd);
+			var result = _productImageService.GetImageByProductId(productId);
 			if (!result.Success)
 			{
 				return BadRequest(result);
