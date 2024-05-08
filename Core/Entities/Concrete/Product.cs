@@ -11,8 +11,10 @@ namespace Core.Entities.Concrete
 		public List<Category>? Categories { get; set; }
 		public List<Comment>? Comments { get; set; }
 		public Restaurant Restaurant { get; set; }
-		public List<Menu>? Menu { get; set; }
-		public virtual List<ProductMenu> ProductMenu { get; set; }
+		public List<Menu>? Menus { get; set; }
+		public List<ProductMenu> ProductMenus { get; set; }
+		public List<ProductImage>? ProductImages { get; set; }
+
 
 	}
 }

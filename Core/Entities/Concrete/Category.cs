@@ -8,6 +8,7 @@ namespace Core.Entities.Concrete
 		public string Name { get; set; }
 		public List<Restaurant>? Restaurants { get; set; }
 		public List<Product>? Products { get; set; }
+		public List<CategoryImage>? CategoryImages { get; set; }
 
 	}
 }

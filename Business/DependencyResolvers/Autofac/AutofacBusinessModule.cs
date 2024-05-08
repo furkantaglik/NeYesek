@@ -1,7 +1,9 @@
 ﻿using Autofac;
 using Autofac.Extras.DynamicProxy;
 using Business.Abstract;
+using Business.Abstract.ImageServices;
 using Business.Concrete;
+using Business.Concrete.ImageManagers;
 using Castle.DynamicProxy;
 using Core.Utilites.Interceptors;
 using Core.Utilites.Security.Jwt;
@@ -36,6 +38,21 @@ public class AutofacBusinessModule : Module
 
 		builder.RegisterType<UserManager>().As<IUserService>();
 		builder.RegisterType<EfUserDal>().As<IUserDal>();
+
+		//images
+		builder.RegisterType<MenuImageManager>().As<IMenuImageService>();
+		builder.RegisterType<EfMenuImageDal>().As<IMenuImageDal>();
+
+		builder.RegisterType<ProductImageManager>().As<IProductImageService>();
+		builder.RegisterType<EfProductImageDal>().As<IProductImageDal>();
+
+		builder.RegisterType<RestaurantImageManager>().As<IRestaurantImageService>();
+		builder.RegisterType<EfRestaurantImageDal>().As<IRestaurantImageDal>();
+
+		builder.RegisterType<CategoryImageManager>().As<ICategoryImageService>();
+		builder.RegisterType<EfCategoryImageDal>().As<ICategoryImageDal>();
+
+
 
 
 		var assembly = Assembly.GetExecutingAssembly();

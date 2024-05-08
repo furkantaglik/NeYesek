@@ -86,7 +86,7 @@ public class JwtHelper : ITokenHelper
 				notBefore: DateTime.Now,
 				claims: SetClaims(restaurant, operationClaims),
 				signingCredentials: signingCredentials
-			
+
 			);
 			return jwt;
 		}

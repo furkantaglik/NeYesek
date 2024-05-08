@@ -17,6 +17,12 @@ public class SqlContext : DbContext
 	public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
 	public DbSet<RestaurantOperationClaim> RestaurantOperationClaims { get; set; }
 
+	//images
+	public DbSet<CategoryImage> CategoryImages { get; set; }
+	public DbSet<ProductImage> ProductImages { get; set; }
+	public DbSet<RestaurantImage> RestaurantImages { get; set; }
+	public DbSet<MenuImage> MenuImages { get; set; }
+
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
 		optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=NeYesek;Trusted_Connection=true");

@@ -1,0 +1,57 @@
+﻿using Business.Abstract.ImageServices;
+using Business.Constants;
+using Core.Entities.Concrete;
+using Core.Utilites.FileHelper;
+using Core.Utilites.Results;
+using DataAccess.Abstract;
+using Microsoft.AspNetCore.Http;
+
+namespace Business.Concrete.ImageManagers
+{
+	public class RestaurantImageManager : IRestaurantImageService
+	{
+		private IRestaurantImageDal _restaurantImageDal;
+		private IFileHelper _fileHelper;
+		public RestaurantImageManager(IRestaurantImageDal restaurantImageDal, IFileHelper fileHelper)
+		{
+			_restaurantImageDal = restaurantImageDal;
+			_fileHelper = fileHelper;
+		}
+
+		public IResult Add(IFormFile file, RestaurantImage restaurantImage)
+		{
+			restaurantImage.ImagePath = _fileHelper.Upload(file, PathConstant.RestaurantImagesPath + restaurantImage.Restaurant.Id + "\\");
+			_restaurantImageDal.Add(restaurantImage);
+			return new SuccessResult("Restorant resmi eklendi");
+		}
+
+		public IDataResult<RestaurantImage> GetImageByRestaurantId(int restaurantId)
+		{
+			return new SuccessDataResult<RestaurantImage>(_restaurantImageDal.Get(x => x.Restaurant.Id == restaurantId));
+		}
+
+		public IDataResult<List<RestaurantImage>> GetAll()
+		{
+			return new SuccessDataResult<List<RestaurantImage>>(_restaurantImageDal.GetAll());
+		}
+
+		public IDataResult<RestaurantImage> GetByImageId(int id)
+		{
+			return new SuccessDataResult<RestaurantImage>(_restaurantImageDal.Get(x => x.Id == id));
+		}
+
+		public IResult Remove(RestaurantImage restaurantImage)
+		{
+			_fileHelper.Delete(PathConstant.RestaurantImagesPath + restaurantImage.Restaurant.Id + "\\" + restaurantImage.ImagePath);
+			_restaurantImageDal.Delete(restaurantImage);
+			return new SuccessResult("Restorant resmi silindi");
+		}
+
+		public IResult Update(IFormFile file, RestaurantImage restaurantImage)
+		{
+			restaurantImage.ImagePath = _fileHelper.Update(file, PathConstant.RestaurantImagesPath + restaurantImage.Restaurant.Id + "\\" + restaurantImage.ImagePath, PathConstant.RestaurantImagesPath + restaurantImage.Restaurant.Id + "\\");
+			_restaurantImageDal.Update(restaurantImage);
+			return new SuccessResult("Restorant resmi güncellendi");
+		}
+	}
+}

@@ -4,6 +4,7 @@ using DataAccess.Concrete.EntityFramework.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(SqlContext))]
-    partial class SqlContextModelSnapshot : ModelSnapshot
+    [Migration("20240508120405_mig6")]
+    partial class mig6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -162,7 +165,10 @@ namespace DataAccess.Migrations
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MenuId")
+                    b.Property<int>("Menu")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MenuId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -494,13 +500,9 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Core.Entities.Concrete.MenuImage", b =>
                 {
-                    b.HasOne("Core.Entities.Concrete.Menu", "Menu")
+                    b.HasOne("Core.Entities.Concrete.Menu", null)
                         .WithMany("MenuImages")
-                        .HasForeignKey("MenuId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Menu");
+                        .HasForeignKey("MenuId");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.Product", b =>

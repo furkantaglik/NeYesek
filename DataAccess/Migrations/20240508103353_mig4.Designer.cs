@@ -4,6 +4,7 @@ using DataAccess.Concrete.EntityFramework.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(SqlContext))]
-    partial class SqlContextModelSnapshot : ModelSnapshot
+    [Migration("20240508103353_mig4")]
+    partial class mig4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,7 +141,7 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RestaurantId")
+                    b.Property<int>("RestaurantId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("TotalPrice")
@@ -452,7 +455,7 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Core.Entities.Concrete.CategoryImage", b =>
                 {
                     b.HasOne("Core.Entities.Concrete.Category", "Category")
-                        .WithMany("CategoryImages")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -487,7 +490,9 @@ namespace DataAccess.Migrations
                 {
                     b.HasOne("Core.Entities.Concrete.Restaurant", "Restaurant")
                         .WithMany("Menus")
-                        .HasForeignKey("RestaurantId");
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Restaurant");
                 });
@@ -495,7 +500,7 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Core.Entities.Concrete.MenuImage", b =>
                 {
                     b.HasOne("Core.Entities.Concrete.Menu", "Menu")
-                        .WithMany("MenuImages")
+                        .WithMany()
                         .HasForeignKey("MenuId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -516,7 +521,7 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Core.Entities.Concrete.ProductImage", b =>
                 {
                     b.HasOne("Core.Entities.Concrete.Product", "Product")
-                        .WithMany("ProductImages")
+                        .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -533,7 +538,7 @@ namespace DataAccess.Migrations
                         .IsRequired();
 
                     b.HasOne("Core.Entities.Concrete.Product", "Product")
-                        .WithMany("ProductMenus")
+                        .WithMany("ProductMenu")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -546,7 +551,7 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Core.Entities.Concrete.RestaurantImage", b =>
                 {
                     b.HasOne("Core.Entities.Concrete.Restaurant", "Restaurant")
-                        .WithMany("RestaurantImages")
+                        .WithMany()
                         .HasForeignKey("RestaurantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -607,15 +612,8 @@ namespace DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Core.Entities.Concrete.Category", b =>
-                {
-                    b.Navigation("CategoryImages");
-                });
-
             modelBuilder.Entity("Core.Entities.Concrete.Menu", b =>
                 {
-                    b.Navigation("MenuImages");
-
                     b.Navigation("ProductMenus");
                 });
 
@@ -623,9 +621,7 @@ namespace DataAccess.Migrations
                 {
                     b.Navigation("Comments");
 
-                    b.Navigation("ProductImages");
-
-                    b.Navigation("ProductMenus");
+                    b.Navigation("ProductMenu");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.Restaurant", b =>
@@ -635,8 +631,6 @@ namespace DataAccess.Migrations
                     b.Navigation("Menus");
 
                     b.Navigation("Products");
-
-                    b.Navigation("RestaurantImages");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.User", b =>

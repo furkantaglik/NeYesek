@@ -4,6 +4,7 @@ using DataAccess.Concrete.EntityFramework.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(SqlContext))]
-    partial class SqlContextModelSnapshot : ModelSnapshot
+    [Migration("20240508064912_mig2")]
+    partial class mig2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,27 +72,6 @@ namespace DataAccess.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Core.Entities.Concrete.CategoryImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ImagePath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("CategoryImages");
-                });
-
             modelBuilder.Entity("Core.Entities.Concrete.Comment", b =>
                 {
                     b.Property<int>("Id")
@@ -138,7 +120,7 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RestaurantId")
+                    b.Property<int>("RestaurantId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("TotalPrice")
@@ -149,27 +131,6 @@ namespace DataAccess.Migrations
                     b.HasIndex("RestaurantId");
 
                     b.ToTable("Menus");
-                });
-
-            modelBuilder.Entity("Core.Entities.Concrete.MenuImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ImagePath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MenuId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MenuId");
-
-                    b.ToTable("MenuImages");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.OperationClaim", b =>
@@ -215,27 +176,6 @@ namespace DataAccess.Migrations
                     b.HasIndex("RestaurantId");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("Core.Entities.Concrete.ProductImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ImagePath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.ProductMenu", b =>
@@ -291,27 +231,6 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Restaurants");
-                });
-
-            modelBuilder.Entity("Core.Entities.Concrete.RestaurantImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ImagePath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RestaurantId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RestaurantId");
-
-                    b.ToTable("RestaurantImages");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.User", b =>
@@ -449,17 +368,6 @@ namespace DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Core.Entities.Concrete.CategoryImage", b =>
-                {
-                    b.HasOne("Core.Entities.Concrete.Category", "Category")
-                        .WithMany("CategoryImages")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
             modelBuilder.Entity("Core.Entities.Concrete.Comment", b =>
                 {
                     b.HasOne("Core.Entities.Concrete.Product", "Product")
@@ -487,20 +395,11 @@ namespace DataAccess.Migrations
                 {
                     b.HasOne("Core.Entities.Concrete.Restaurant", "Restaurant")
                         .WithMany("Menus")
-                        .HasForeignKey("RestaurantId");
-
-                    b.Navigation("Restaurant");
-                });
-
-            modelBuilder.Entity("Core.Entities.Concrete.MenuImage", b =>
-                {
-                    b.HasOne("Core.Entities.Concrete.Menu", "Menu")
-                        .WithMany("MenuImages")
-                        .HasForeignKey("MenuId")
+                        .HasForeignKey("RestaurantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Menu");
+                    b.Navigation("Restaurant");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.Product", b =>
@@ -513,17 +412,6 @@ namespace DataAccess.Migrations
                     b.Navigation("Restaurant");
                 });
 
-            modelBuilder.Entity("Core.Entities.Concrete.ProductImage", b =>
-                {
-                    b.HasOne("Core.Entities.Concrete.Product", "Product")
-                        .WithMany("ProductImages")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("Core.Entities.Concrete.ProductMenu", b =>
                 {
                     b.HasOne("Core.Entities.Concrete.Menu", "Menu")
@@ -533,7 +421,7 @@ namespace DataAccess.Migrations
                         .IsRequired();
 
                     b.HasOne("Core.Entities.Concrete.Product", "Product")
-                        .WithMany("ProductMenus")
+                        .WithMany("ProductMenu")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -541,17 +429,6 @@ namespace DataAccess.Migrations
                     b.Navigation("Menu");
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("Core.Entities.Concrete.RestaurantImage", b =>
-                {
-                    b.HasOne("Core.Entities.Concrete.Restaurant", "Restaurant")
-                        .WithMany("RestaurantImages")
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Restaurant");
                 });
 
             modelBuilder.Entity("Entities.Concrete.DTOs.RestaurantDto.RestaurantOperationClaim", b =>
@@ -607,15 +484,8 @@ namespace DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Core.Entities.Concrete.Category", b =>
-                {
-                    b.Navigation("CategoryImages");
-                });
-
             modelBuilder.Entity("Core.Entities.Concrete.Menu", b =>
                 {
-                    b.Navigation("MenuImages");
-
                     b.Navigation("ProductMenus");
                 });
 
@@ -623,9 +493,7 @@ namespace DataAccess.Migrations
                 {
                     b.Navigation("Comments");
 
-                    b.Navigation("ProductImages");
-
-                    b.Navigation("ProductMenus");
+                    b.Navigation("ProductMenu");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.Restaurant", b =>
@@ -635,8 +503,6 @@ namespace DataAccess.Migrations
                     b.Navigation("Menus");
 
                     b.Navigation("Products");
-
-                    b.Navigation("RestaurantImages");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.User", b =>
