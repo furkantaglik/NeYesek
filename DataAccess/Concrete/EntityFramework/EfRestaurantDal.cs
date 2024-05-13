@@ -25,11 +25,13 @@ public class EfRestaurantDal : EfEntityRepositoryBase<Restaurant, SqlContext>, I
 		var result = from restaurant in context.Restaurants
 					 select new RestaurantDetailDto
 					 {
+
 						 Restaurant = restaurant,
 						 Products = restaurant.Products.ToList(),
 						 Menus = restaurant.Menus.ToList(),
 						 Comments = restaurant.Comments.ToList(),
 						 Categories = restaurant.Categories.ToList(),
+						 RestaurantImage = restaurant.RestaurantImage
 					 };
 		return result.ToList();
 	}
@@ -45,7 +47,8 @@ public class EfRestaurantDal : EfEntityRepositoryBase<Restaurant, SqlContext>, I
 						 Products = r.Products.ToList(),
 						 Menus = r.Menus.ToList(),
 						 Comments = r.Comments.ToList(),
-						 Categories = r.Categories.ToList()
+						 Categories = r.Categories.ToList(),
+						 RestaurantImage = r.RestaurantImage
 					 };
 		return result.FirstOrDefault();
 	}

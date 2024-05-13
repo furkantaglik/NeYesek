@@ -8,5 +8,6 @@ namespace Entities.Concrete.DTOs.CategoryDto
 		public Category Category { get; set; }
 		public List<Product> Products { get; set; }
 		public List<Restaurant> Restaurants { get; set; }
+		public CategoryImage CategoryImage { get; set; }
 	}
 }

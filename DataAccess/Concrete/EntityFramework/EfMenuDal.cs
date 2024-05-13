@@ -17,6 +17,7 @@ public class EfMenuDal : EfEntityRepositoryBase<Menu, SqlContext>, IMenuDal
 						 menu = Menu,
 						 restaurant = Menu.Restaurant,
 						 products = Menu.Products.ToList(),
+						 MenuImage = Menu.MenuImage
 
 					 };
 
@@ -32,7 +33,8 @@ public class EfMenuDal : EfEntityRepositoryBase<Menu, SqlContext>, IMenuDal
 					 {
 						 products = m.Products.ToList(),
 						 restaurant = m.Restaurant,
-						 menu = m,
+						 MenuImage = m.MenuImage,
+						 menu = m
 
 					 };
 
@@ -48,6 +50,7 @@ public class EfMenuDal : EfEntityRepositoryBase<Menu, SqlContext>, IMenuDal
 					 {
 						 products = menu.Products,
 						 restaurant = menu.Restaurant,
+						 MenuImage = menu.MenuImage,
 						 menu = menu,
 
 					 };

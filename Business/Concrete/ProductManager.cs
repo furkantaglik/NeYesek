@@ -9,15 +9,23 @@ namespace Business.Concrete;
 public class ProductManager : IProductService
 {
 	IProductDal _productDal;
+	IProductImageDal _productImageDal;
 
-	public ProductManager(IProductDal productDal)
+	public ProductManager(IProductDal productDal, IProductImageDal productImageDal)
 	{
 		_productDal = productDal;
+		_productImageDal = productImageDal;
 	}
 
 	public IResult Add(Product product)
 	{
 		_productDal.Add(product);
+		if (product.ProductImage != null)
+		{
+			product.ProductImage.ProductId = product.Id;
+			product.ProductImage.Product = product;
+			_productImageDal.Add(product.ProductImage);
+		}
 		return new SuccessResult("Ürün eklendi");
 	}
 
@@ -74,6 +82,12 @@ public class ProductManager : IProductService
 	public IResult Update(Product product)
 	{
 		_productDal.Update(product);
+		if (product.ProductImage != null)
+		{
+			product.ProductImage.ProductId = product.Id;
+			product.ProductImage.Product = product;
+			_productImageDal.Add(product.ProductImage);
+		}
 		return new SuccessResult("Ürün güncellendi");
 	}
 }

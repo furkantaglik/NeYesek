@@ -31,32 +31,21 @@ public class SqlContext : DbContext
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
-		//comment  
-		modelBuilder.Entity<Comment>()
-			.HasOne(c => c.Restaurant)
-			.WithMany(r => r.Comments)
-			.OnDelete(DeleteBehavior.ClientSetNull);
-
-		//product
-		modelBuilder.Entity<Product>()
-			.HasOne(p => p.Restaurant)
-			.WithMany(r => r.Products)
-			.OnDelete(DeleteBehavior.ClientSetNull);
-
-		//menu and product
-		modelBuilder.Entity<ProductMenu>()
-	   .HasKey(pm => new { pm.ProductId, pm.MenuId });
-
-
+		////comment  
 		//modelBuilder.Entity<Comment>()
-		//	.HasOne(c => c.User)
-		//	.WithMany(u => u.Comments)
-		//	.OnDelete(DeleteBehavior.Cascade);
+		//	.HasOne(c => c.Restaurant)
+		//	.WithMany(r => r.Comments)
+		//	.OnDelete(DeleteBehavior.ClientSetNull);
 
-		//modelBuilder.Entity<Comment>()
-		//	.HasOne(c => c.Product)
-		//	.WithMany(u => u.Comments)
-		//	.OnDelete(DeleteBehavior.Cascade);
+		////product
+		//modelBuilder.Entity<Product>()
+		//	.HasOne(p => p.Restaurant)
+		//	.WithMany(r => r.Products)
+		//	.OnDelete(DeleteBehavior.ClientSetNull);
+
+		////menu and product
+		//modelBuilder.Entity<ProductMenu>()
+	 //  .HasKey(pm => new { pm.ProductId, pm.MenuId });
 
 	}
 }

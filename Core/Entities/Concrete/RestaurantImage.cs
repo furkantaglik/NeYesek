@@ -6,6 +6,7 @@ namespace Core.Entities.Concrete
 	{
 		public int Id { get; set; }
 		public string? ImagePath { get; set; }
-		public Restaurant Restaurant { get; set; }
+		public int? RestaurantId { get; set; }
+		public Restaurant? Restaurant { get; set; }
 	}
 }

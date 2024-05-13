@@ -2,6 +2,7 @@
 using Core.Entities.Concrete;
 using Core.Utilites.Results;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete.DTOs.RestaurantDto;
 
 namespace Business.Concrete;
@@ -9,21 +10,29 @@ namespace Business.Concrete;
 public class RestaurantManager : IRestaurantService
 {
 	IRestaurantDal _restaurantDal;
-	public RestaurantManager(IRestaurantDal restaurantDal)
+	IRestaurantImageDal _restaurantImageDal;
+	public RestaurantManager(IRestaurantDal restaurantDal, IRestaurantImageDal restaurantImageDal)
 	{
 		_restaurantDal = restaurantDal;
+		_restaurantImageDal = restaurantImageDal;
 	}
 
 	public IResult Add(Restaurant restaurant)
 	{
 		_restaurantDal.Add(restaurant);
+		if (restaurant.RestaurantImage != null)
+		{
+			restaurant.RestaurantImage.RestaurantId = restaurant.Id;
+			restaurant.RestaurantImage.Restaurant = restaurant;
+			_restaurantImageDal.Add(restaurant.RestaurantImage);
+		}
 		return new SuccessResult("Restoran eklendi");
 	}
 
 	public IDataResult<List<Restaurant>> GetAll()
 	{
 		var data = _restaurantDal.GetAll();
-		return new SuccessDataResult<List<Restaurant>>();
+		return new SuccessDataResult<List<Restaurant>>(data);
 	}
 
 	public IDataResult<List<RestaurantDetailDto>> GetAllRestaurantDetails()
@@ -64,6 +73,12 @@ public class RestaurantManager : IRestaurantService
 	public IResult Update(Restaurant restaurant)
 	{
 		_restaurantDal.Update(restaurant);
+		if (restaurant.RestaurantImage != null)
+		{
+			restaurant.RestaurantImage.RestaurantId = restaurant.Id;
+			restaurant.RestaurantImage.Restaurant = restaurant;
+			_restaurantImageDal.Add(restaurant.RestaurantImage);
+		}
 		return new SuccessResult("Restoran güncellendi");
 	}
 }

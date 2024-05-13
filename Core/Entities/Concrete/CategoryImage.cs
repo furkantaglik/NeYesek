@@ -6,6 +6,7 @@ namespace Core.Entities.Concrete
 	{
 		public int Id { get; set; }
 		public string? ImagePath { get; set; }
-		public Category Category { get; set; }
+		public int? CategoryId { get; set; }
+		public Category? Category { get; set; }
 	}
 }

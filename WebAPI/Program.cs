@@ -1,4 +1,5 @@
 using Autofac;
+using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using Business.DependencyResolvers.Autofac;
 using Core.Extensions;
@@ -7,6 +8,8 @@ using Core.Utilites.Security.Jwt;
 using DataAccess.Concrete.EntityFramework.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Text.Json.Serialization;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +40,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 				  };
 			  });
 
+//builder.Services.AddControllers().AddJsonOptions(x =>
+//   x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -47,6 +53,8 @@ if (app.Environment.IsDevelopment())
 app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
 
 //app.ConfigureCustomExceptionMiddleware();
+
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 

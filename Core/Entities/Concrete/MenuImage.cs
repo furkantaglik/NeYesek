@@ -6,6 +6,7 @@ namespace Core.Entities.Concrete
 	{
 		public int Id { get; set; }
 		public string? ImagePath { get; set; }
-		public Menu Menu { get; set; }
+		public int? MenuId { get; set; }
+		public Menu? Menu { get; set; }
 	}
 }

@@ -8,5 +8,6 @@ namespace Entities.Concrete.DTOs.MenuDto
 		public List<Product> products { get; set; }
 		public Restaurant restaurant { get; set; }
 		public Menu menu { get; set; }
+		public MenuImage MenuImage { get; set; }
 	}
 }

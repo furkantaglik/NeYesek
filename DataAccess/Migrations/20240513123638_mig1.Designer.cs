@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(SqlContext))]
-    [Migration("20240508114111_mig5")]
-    partial class mig5
+    [Migration("20240513123638_mig1")]
+    partial class mig1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -80,7 +80,7 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("ImagePath")
@@ -88,7 +88,9 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("CategoryId")
+                        .IsUnique()
+                        .HasFilter("[CategoryId] IS NOT NULL");
 
                     b.ToTable("CategoryImages");
                 });
@@ -141,7 +143,7 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RestaurantId")
+                    b.Property<int?>("RestaurantId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("TotalPrice")
@@ -165,12 +167,14 @@ namespace DataAccess.Migrations
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MenuId")
+                    b.Property<int?>("MenuId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MenuId");
+                    b.HasIndex("MenuId")
+                        .IsUnique()
+                        .HasFilter("[MenuId] IS NOT NULL");
 
                     b.ToTable("MenuImages");
                 });
@@ -231,27 +235,37 @@ namespace DataAccess.Migrations
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductId")
+                        .IsUnique()
+                        .HasFilter("[ProductId] IS NOT NULL");
 
                     b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.ProductMenu", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("MenuId")
                         .HasColumnType("int");
 
-                    b.HasKey("ProductId", "MenuId");
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("MenuId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductMenu");
                 });
@@ -307,12 +321,14 @@ namespace DataAccess.Migrations
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RestaurantId")
+                    b.Property<int?>("RestaurantId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RestaurantId");
+                    b.HasIndex("RestaurantId")
+                        .IsUnique()
+                        .HasFilter("[RestaurantId] IS NOT NULL");
 
                     b.ToTable("RestaurantImages");
                 });
@@ -455,10 +471,8 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Core.Entities.Concrete.CategoryImage", b =>
                 {
                     b.HasOne("Core.Entities.Concrete.Category", "Category")
-                        .WithMany("CategoryImages")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("CategoryImage")
+                        .HasForeignKey("Core.Entities.Concrete.CategoryImage", "CategoryId");
 
                     b.Navigation("Category");
                 });
@@ -490,9 +504,7 @@ namespace DataAccess.Migrations
                 {
                     b.HasOne("Core.Entities.Concrete.Restaurant", "Restaurant")
                         .WithMany("Menus")
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RestaurantId");
 
                     b.Navigation("Restaurant");
                 });
@@ -500,10 +512,8 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Core.Entities.Concrete.MenuImage", b =>
                 {
                     b.HasOne("Core.Entities.Concrete.Menu", "Menu")
-                        .WithMany("MenuImages")
-                        .HasForeignKey("MenuId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("MenuImage")
+                        .HasForeignKey("Core.Entities.Concrete.MenuImage", "MenuId");
 
                     b.Navigation("Menu");
                 });
@@ -513,6 +523,7 @@ namespace DataAccess.Migrations
                     b.HasOne("Core.Entities.Concrete.Restaurant", "Restaurant")
                         .WithMany("Products")
                         .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Restaurant");
@@ -521,10 +532,8 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Core.Entities.Concrete.ProductImage", b =>
                 {
                     b.HasOne("Core.Entities.Concrete.Product", "Product")
-                        .WithMany("ProductImages")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("ProductImage")
+                        .HasForeignKey("Core.Entities.Concrete.ProductImage", "ProductId");
 
                     b.Navigation("Product");
                 });
@@ -551,10 +560,8 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Core.Entities.Concrete.RestaurantImage", b =>
                 {
                     b.HasOne("Core.Entities.Concrete.Restaurant", "Restaurant")
-                        .WithMany("RestaurantImages")
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("RestaurantImage")
+                        .HasForeignKey("Core.Entities.Concrete.RestaurantImage", "RestaurantId");
 
                     b.Navigation("Restaurant");
                 });
@@ -614,12 +621,12 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Core.Entities.Concrete.Category", b =>
                 {
-                    b.Navigation("CategoryImages");
+                    b.Navigation("CategoryImage");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.Menu", b =>
                 {
-                    b.Navigation("MenuImages");
+                    b.Navigation("MenuImage");
 
                     b.Navigation("ProductMenus");
                 });
@@ -628,7 +635,7 @@ namespace DataAccess.Migrations
                 {
                     b.Navigation("Comments");
 
-                    b.Navigation("ProductImages");
+                    b.Navigation("ProductImage");
 
                     b.Navigation("ProductMenus");
                 });
@@ -641,7 +648,7 @@ namespace DataAccess.Migrations
 
                     b.Navigation("Products");
 
-                    b.Navigation("RestaurantImages");
+                    b.Navigation("RestaurantImage");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.User", b =>

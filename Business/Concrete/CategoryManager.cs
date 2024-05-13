@@ -2,6 +2,7 @@
 using Core.Entities.Concrete;
 using Core.Utilites.Results;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete.DTOs.CategoryDto;
 
 namespace Business.Concrete;
@@ -9,14 +10,22 @@ namespace Business.Concrete;
 public class CategoryManager : ICategoryService
 {
 	ICategoryDal _categoryDal;
-	public CategoryManager(ICategoryDal categoryDal)
+	ICategoryImageDal _categoryImageDal;
+	public CategoryManager(ICategoryDal categoryDal, ICategoryImageDal categoryImageDal)
 	{
 		_categoryDal = categoryDal;
+		_categoryImageDal = categoryImageDal;
 	}
 
 	public IResult Add(Category category)
 	{
 		_categoryDal.Add(category);
+		if (category.CategoryImage != null)
+		{
+			category.CategoryImage.CategoryId = category.Id;
+			category.CategoryImage.Category = category;
+			_categoryImageDal.Add(category.CategoryImage);
+		}
 		return new SuccessResult("Kategori Eklendi");
 	}
 
@@ -65,6 +74,12 @@ public class CategoryManager : ICategoryService
 	public IResult Update(Category category)
 	{
 		_categoryDal.Update(category);
+		if (category.CategoryImage != null)
+		{
+			category.CategoryImage.CategoryId = category.Id;
+			category.CategoryImage.Category = category;
+			_categoryImageDal.Add(category.CategoryImage);
+		}
 		return new SuccessResult("Kategori Güncellendi");
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Abstract.ImageServices;
 using Core.Entities.Concrete;
 using Core.Utilites.Results;
 using DataAccess.Abstract;
@@ -9,16 +10,25 @@ namespace Business.Concrete;
 public class MenuManager : IMenuService
 {
 	IMenuDal _menuDal;
-	public MenuManager(IMenuDal menuDal)
+	IMenuImageDal _menuImageDal;
+	public MenuManager(IMenuDal menuDal, IMenuImageDal menuImageDal)
 	{
 		_menuDal = menuDal;
+		_menuImageDal = menuImageDal;
 	}
 
 	public IResult Add(Menu menu)
 	{
 		_menuDal.Add(menu);
-		return new SuccessResult("Menü Eklendi");
+		if (menu.MenuImage != null)
+		{
+			menu.MenuImage.MenuId = menu.Id;
+			menu.MenuImage.Menu = menu;
+			_menuImageDal.Add(menu.MenuImage);
+		}
+		return new SuccessResult("Menü eklendi");
 	}
+
 
 	public IDataResult<List<Menu>> GetAll()
 	{
@@ -59,6 +69,12 @@ public class MenuManager : IMenuService
 	public IResult Update(Menu menu)
 	{
 		_menuDal.Update(menu);
+		if (menu.MenuImage != null)
+		{
+			menu.MenuImage.MenuId = menu.Id;
+			menu.MenuImage.Menu = menu;
+			_menuImageDal.Add(menu.MenuImage);
+		}
 		return new SuccessResult("Menü Güncellendi");
 	}
 }

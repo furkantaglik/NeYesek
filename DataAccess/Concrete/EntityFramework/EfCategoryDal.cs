@@ -17,6 +17,7 @@ public class EfCategoryDal : EfEntityRepositoryBase<Category, SqlContext>, ICate
 						 Restaurants = categories.Restaurants.ToList(),
 						 Products = categories.Products.ToList(),
 						 Category = categories,
+						 CategoryImage=categories.CategoryImage
 
 					 };
 
@@ -32,6 +33,7 @@ public class EfCategoryDal : EfEntityRepositoryBase<Category, SqlContext>, ICate
 					 {
 						 Restaurants = c.Restaurants.ToList(),
 						 Products = c.Products.ToList(),
+						 CategoryImage=c.CategoryImage,
 						 Category = c,
 
 					 };
@@ -48,6 +50,7 @@ public class EfCategoryDal : EfEntityRepositoryBase<Category, SqlContext>, ICate
 					 {
 						 Restaurants = category.Restaurants.ToList(),
 						 Products = category.Products.ToList(),
+						 CategoryImage=category.CategoryImage,
 						 Category = category
 					 };
 
@@ -63,6 +66,7 @@ public class EfCategoryDal : EfEntityRepositoryBase<Category, SqlContext>, ICate
 					 {
 						 Restaurants = category.Restaurants.ToList(),
 						 Products = category.Products.ToList(),
+						 CategoryImage=category.CategoryImage,
 						 Category = category
 					 };
 

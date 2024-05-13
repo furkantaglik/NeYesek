@@ -12,5 +12,6 @@ namespace Business.Abstract.ImageServices
 		IResult Add(IFormFile file, MenuImage menuImage);
 		IResult Update(IFormFile file, MenuImage menuImage);
 		IResult Remove(MenuImage menuImage);
+		IResult AddMenuEntity(MenuImage menuImage);
 	}
 }

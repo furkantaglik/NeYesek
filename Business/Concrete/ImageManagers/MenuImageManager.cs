@@ -25,6 +25,11 @@ namespace Business.Concrete.ImageManagers
 			_menuImageDal.Add(menuImage);
 			return new SuccessResult("Menü resmi eklendi");
 		}
+		public IResult AddMenuEntity(MenuImage menuImage)
+		{
+			_menuImageDal.Add(menuImage);
+			return new SuccessResult();
+		}
 
 		public IDataResult<MenuImage> GetImageByMenuId(int menuId)
 		{

@@ -23,7 +23,7 @@ namespace Business.Concrete.ImageManagers
 
 			categoryImage.ImagePath = _fileHelper.Upload(file, PathConstant.CategoryImagesPath);
 			_categoryImageDal.Add(categoryImage);
-			return new SuccessResult("Menü resmi eklendi");
+			return new SuccessResult("Kategori resmi eklendi");
 		}
 
 		public IDataResult<CategoryImage> GetImageByCategoryId(int categoryId)
@@ -45,14 +45,14 @@ namespace Business.Concrete.ImageManagers
 		{
 			_fileHelper.Delete(PathConstant.CategoryImagesPath + categoryImage.ImagePath);
 			_categoryImageDal.Delete(categoryImage);
-			return new SuccessResult("Menü resmi silindi");
+			return new SuccessResult("Kategori resmi silindi");
 		}
 
 		public IResult Update(IFormFile file, CategoryImage categoryImage)
 		{
 			categoryImage.ImagePath = _fileHelper.Update(file, PathConstant.CategoryImagesPath + categoryImage.ImagePath, PathConstant.CategoryImagesPath);
 			_categoryImageDal.Update(categoryImage);
-			return new SuccessResult("Menü resmi güncellendi");
+			return new SuccessResult("Kategori resmi güncellendi");
 		}
 	}
 }

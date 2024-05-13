@@ -10,6 +10,7 @@ namespace Entities.Concrete.DTOs.RestaurantDto
 		public List<Menu> Menus { get; set; }
 		public List<Product> Products { get; set; }
 		public List<Category> Categories { get; set; }
+		public RestaurantImage RestaurantImage { get; set; }
 
 	}
 }

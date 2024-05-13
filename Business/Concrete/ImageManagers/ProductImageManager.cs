@@ -23,7 +23,7 @@ namespace Business.Concrete.ImageManagers
 
 			productImage.ImagePath = _fileHelper.Upload(file, PathConstant.ProductImagesPath);
 			_productImageDal.Add(productImage);
-			return new SuccessResult("Menü resmi eklendi");
+			return new SuccessResult("ürün resmi eklendi");
 		}
 
 		public IDataResult<ProductImage> GetImageByProductId(int productId)
@@ -45,14 +45,14 @@ namespace Business.Concrete.ImageManagers
 		{
 			_fileHelper.Delete(PathConstant.ProductImagesPath + productImage.ImagePath);
 			_productImageDal.Delete(productImage);
-			return new SuccessResult("Menü resmi silindi");
+			return new SuccessResult("Ürün resmi silindi");
 		}
 
 		public IResult Update(IFormFile file, ProductImage productImage)
 		{
 			productImage.ImagePath = _fileHelper.Update(file, PathConstant.ProductImagesPath + productImage.ImagePath, PathConstant.ProductImagesPath);
 			_productImageDal.Update(productImage);
-			return new SuccessResult("Menü resmi güncellendi");
+			return new SuccessResult("Ürün resmi güncellendi");
 		}
 	}
 }

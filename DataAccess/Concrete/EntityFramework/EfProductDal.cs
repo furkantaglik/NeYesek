@@ -17,6 +17,7 @@ public class EfProductDal : EfEntityRepositoryBase<Product, SqlContext>, IProduc
 						 Restaurant = product.Restaurant,
 						 Product = product,
 						 Categories = product.Categories.ToList(),
+						 ProductImage=product.ProductImage
 
 					 };
 
@@ -34,6 +35,7 @@ public class EfProductDal : EfEntityRepositoryBase<Product, SqlContext>, IProduc
 						 Product = p,
 						 Categories = p.Categories.ToList(),
 						 Restaurant = p.Restaurant,
+						 ProductImage = p.ProductImage
 					 };
 		return result.FirstOrDefault();
 	}
@@ -48,6 +50,7 @@ public class EfProductDal : EfEntityRepositoryBase<Product, SqlContext>, IProduc
 						 Restaurant = product.Restaurant,
 						 Product = product,
 						 Categories = product.Categories.ToList(),
+						 ProductImage = product.ProductImage
 
 					 };
 

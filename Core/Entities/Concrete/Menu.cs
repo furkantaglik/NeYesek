@@ -11,6 +11,6 @@ namespace Core.Entities.Concrete
 		public Restaurant? Restaurant { get; set; }
 		public List<Product>? Products { get; set; }
 		public List<ProductMenu>? ProductMenus { get; set; }
-		public List<MenuImage>? MenuImages { get; set; }
+		public MenuImage? MenuImage { get; set; }
 	}
 }
