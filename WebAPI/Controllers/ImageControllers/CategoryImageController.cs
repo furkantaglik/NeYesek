@@ -1,6 +1,7 @@
 ﻿using Business.Abstract.ImageServices;
 using Core.Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace WebAPI.Controllers.ImageControllers
 {
@@ -49,9 +50,10 @@ namespace WebAPI.Controllers.ImageControllers
 		}
 
 		[HttpPost("add")]
-		public IActionResult Add([FromForm(Name = "Image")] IFormFile file, [FromForm] CategoryImage categoryImage)
+		public IActionResult Add([FromForm(Name = "Image")] IFormFile file, [FromForm] string categoryImage)
 		{
-			var result = _categoryImageService.Add(file, categoryImage);
+			CategoryImage convertImage = JsonConvert.DeserializeObject<CategoryImage>(categoryImage);
+			var result = _categoryImageService.Add(file, convertImage);
 			if (!result.Success)
 			{
 				return BadRequest(result);
@@ -60,9 +62,10 @@ namespace WebAPI.Controllers.ImageControllers
 		}
 
 		[HttpPost("update")]
-		public IActionResult Update([FromForm(Name = "Image")] IFormFile file, [FromForm] CategoryImage categoryImage)
+		public IActionResult Update([FromForm(Name = "Image")] IFormFile file, [FromForm] string categoryImage)
 		{
-			var result = _categoryImageService.Update(file, categoryImage);
+			CategoryImage convertImage = JsonConvert.DeserializeObject<CategoryImage>(categoryImage);
+			var result = _categoryImageService.Update(file, convertImage);
 			if (!result.Success)
 			{
 				return BadRequest(result);
@@ -71,9 +74,10 @@ namespace WebAPI.Controllers.ImageControllers
 		}
 
 		[HttpPost("remove")]
-		public IActionResult Remove([FromForm] CategoryImage categoryImage)
+		public IActionResult Remove([FromForm] string categoryImage)
 		{
-			var result = _categoryImageService.Remove(categoryImage);
+			CategoryImage convertImage = JsonConvert.DeserializeObject<CategoryImage>(categoryImage);
+			var result = _categoryImageService.Remove(convertImage);
 			if (!result.Success)
 			{
 				return BadRequest(result);

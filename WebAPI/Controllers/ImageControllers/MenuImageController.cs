@@ -2,6 +2,7 @@
 using Business.Abstract.ImageServices;
 using Core.Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace WebAPI.Controllers.ImageControllers
 {
@@ -51,9 +52,10 @@ namespace WebAPI.Controllers.ImageControllers
 		}
 
 		[HttpPost("add")]
-		public IActionResult Add([FromForm(Name = "Image")] IFormFile file, [FromForm] MenuImage menuImage)
+		public IActionResult Add([FromForm(Name = "Image")] IFormFile file, [FromForm] string menuImage)
 		{
-			var result = _menuImageService.Add(file, menuImage);
+			MenuImage convertImage = JsonConvert.DeserializeObject<MenuImage>(menuImage);
+			var result = _menuImageService.Add(file, convertImage);
 			if (!result.Success)
 			{
 				return BadRequest(result);
@@ -62,9 +64,10 @@ namespace WebAPI.Controllers.ImageControllers
 		}
 
 		[HttpPost("update")]
-		public IActionResult Update([FromForm(Name = "Image")] IFormFile file, [FromForm] MenuImage menuImage)
+		public IActionResult Update([FromForm(Name = "Image")] IFormFile file, [FromForm] string menuImage)
 		{
-			var result = _menuImageService.Update(file, menuImage);
+			MenuImage convertImage = JsonConvert.DeserializeObject<MenuImage>(menuImage);
+			var result = _menuImageService.Update(file, convertImage);
 			if (!result.Success)
 			{
 				return BadRequest(result);
@@ -73,9 +76,10 @@ namespace WebAPI.Controllers.ImageControllers
 		}
 
 		[HttpPost("remove")]
-		public IActionResult Remove([FromForm] MenuImage menuImage)
+		public IActionResult Remove([FromForm] string menuImage)
 		{
-			var result = _menuImageService.Remove(menuImage);
+			MenuImage convertImage = JsonConvert.DeserializeObject<MenuImage>(menuImage);
+			var result = _menuImageService.Remove(convertImage);
 			if (!result.Success)
 			{
 				return BadRequest(result);

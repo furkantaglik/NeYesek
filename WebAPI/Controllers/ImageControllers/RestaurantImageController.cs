@@ -1,6 +1,8 @@
 ﻿using Business.Abstract.ImageServices;
 using Core.Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace WebAPI.Controllers.ImageControllers
 {
@@ -49,9 +51,10 @@ namespace WebAPI.Controllers.ImageControllers
 		}
 
 		[HttpPost("add")]
-		public IActionResult Add([FromForm(Name = "Image")] IFormFile file, [FromForm] RestaurantImage restaurantImage)
+		public IActionResult Add([FromForm(Name = "Image")] IFormFile file, [FromForm] string restaurantImage)
 		{
-			var result = _restaurantImageService.Add(file, restaurantImage);
+			RestaurantImage convertImage = JsonConvert.DeserializeObject<RestaurantImage>(restaurantImage);
+			var result = _restaurantImageService.Add(file, convertImage);
 			if (!result.Success)
 			{
 				return BadRequest(result);
@@ -60,9 +63,10 @@ namespace WebAPI.Controllers.ImageControllers
 		}
 
 		[HttpPost("update")]
-		public IActionResult Update([FromForm(Name = "Image")] IFormFile file, [FromForm] RestaurantImage restaurantImage)
+		public IActionResult Update([FromForm(Name = "Image")] IFormFile file, [FromForm] string restaurantImage)
 		{
-			var result = _restaurantImageService.Update(file, restaurantImage);
+			RestaurantImage convertImage = JsonConvert.DeserializeObject<RestaurantImage>(restaurantImage);
+			var result = _restaurantImageService.Update(file, convertImage);
 			if (!result.Success)
 			{
 				return BadRequest(result);
@@ -71,9 +75,10 @@ namespace WebAPI.Controllers.ImageControllers
 		}
 
 		[HttpPost("remove")]
-		public IActionResult Remove([FromForm] RestaurantImage restaurantImage)
+		public IActionResult Remove([FromForm] string restaurantImage)
 		{
-			var result = _restaurantImageService.Remove(restaurantImage);
+			RestaurantImage convertImage = JsonConvert.DeserializeObject<RestaurantImage>(restaurantImage);
+			var result = _restaurantImageService.Remove(convertImage);
 			if (!result.Success)
 			{
 				return BadRequest(result);

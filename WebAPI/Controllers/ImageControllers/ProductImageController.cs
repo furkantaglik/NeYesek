@@ -1,6 +1,7 @@
 ﻿using Business.Abstract.ImageServices;
 using Core.Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace WebAPI.Controllers.ImageControllers
 {
@@ -49,9 +50,10 @@ namespace WebAPI.Controllers.ImageControllers
 		}
 
 		[HttpPost("add")]
-		public IActionResult Add([FromForm(Name = "Image")] IFormFile file, [FromForm] ProductImage productImage)
+		public IActionResult Add([FromForm(Name = "Image")] IFormFile file, [FromForm] string productImage)
 		{
-			var result = _productImageService.Add(file, productImage);
+			ProductImage convertImage = JsonConvert.DeserializeObject<ProductImage>(productImage);
+			var result = _productImageService.Add(file, convertImage);
 			if (!result.Success)
 			{
 				return BadRequest(result);
@@ -60,9 +62,10 @@ namespace WebAPI.Controllers.ImageControllers
 		}
 
 		[HttpPost("update")]
-		public IActionResult Update([FromForm(Name = "Image")] IFormFile file, [FromForm] ProductImage productImage)
+		public IActionResult Update([FromForm(Name = "Image")] IFormFile file, [FromForm] string productImage)
 		{
-			var result = _productImageService.Update(file, productImage);
+			ProductImage convertImage = JsonConvert.DeserializeObject<ProductImage>(productImage);
+			var result = _productImageService.Update(file, convertImage);
 			if (!result.Success)
 			{
 				return BadRequest(result);
@@ -71,9 +74,10 @@ namespace WebAPI.Controllers.ImageControllers
 		}
 
 		[HttpPost("remove")]
-		public IActionResult Remove([FromForm] ProductImage productImage)
+		public IActionResult Remove([FromForm] string productImage)
 		{
-			var result = _productImageService.Remove(productImage);
+			ProductImage convertImage = JsonConvert.DeserializeObject<ProductImage>(productImage);
+			var result = _productImageService.Remove(convertImage);
 			if (!result.Success)
 			{
 				return BadRequest(result);
