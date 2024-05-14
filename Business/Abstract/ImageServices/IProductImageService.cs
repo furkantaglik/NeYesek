@@ -9,8 +9,8 @@ namespace Business.Abstract.ImageServices
 		IDataResult<List<ProductImage>> GetAll();
 		IDataResult<ProductImage> GetByImageId(int id);
 		IDataResult<ProductImage> GetImageByProductId(int productId);
-		IResult Add(IFormFile file, ProductImage productImage);
-		IResult Update(IFormFile file, ProductImage productImage);
+		IDataResult<ProductImage> Add(IFormFile file, ProductImage productImage);
+		IDataResult<ProductImage> Update(IFormFile file, ProductImage productImage);
 		IResult Remove(ProductImage productImage);
 	}
 }

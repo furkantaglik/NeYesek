@@ -17,7 +17,7 @@ public class EfProductDal : EfEntityRepositoryBase<Product, SqlContext>, IProduc
 						 Restaurant = product.Restaurant,
 						 Product = product,
 						 Categories = product.Categories.ToList(),
-						 ProductImage=product.ProductImage
+						 ProductImage = product.ProductImage
 
 					 };
 

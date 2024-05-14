@@ -4,6 +4,7 @@ using Core.Entities.Concrete;
 using Core.Utilites.FileHelper;
 using Core.Utilites.Results;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
 using Microsoft.AspNetCore.Http;
 
 namespace Business.Concrete.ImageManagers
@@ -18,17 +19,13 @@ namespace Business.Concrete.ImageManagers
 			_fileHelper = fileHelper;
 		}
 
-		public IResult Add(IFormFile file, MenuImage menuImage)
+		public IDataResult<MenuImage> Add(IFormFile file, MenuImage menuImage)
 		{
 
 			menuImage.ImagePath = _fileHelper.Upload(file, PathConstant.MenuImagesPath);
 			_menuImageDal.Add(menuImage);
-			return new SuccessResult("Menü resmi eklendi");
-		}
-		public IResult AddMenuEntity(MenuImage menuImage)
-		{
-			_menuImageDal.Add(menuImage);
-			return new SuccessResult();
+			var data = _menuImageDal.Get(m => m.Id == menuImage.Id);
+			return new SuccessDataResult<MenuImage>(data, "Menü resmi eklendi");
 		}
 
 		public IDataResult<MenuImage> GetImageByMenuId(int menuId)
@@ -53,11 +50,12 @@ namespace Business.Concrete.ImageManagers
 			return new SuccessResult("Menü resmi silindi");
 		}
 
-		public IResult Update(IFormFile file, MenuImage menuImage)
+		public IDataResult<MenuImage> Update(IFormFile file, MenuImage menuImage)
 		{
-			menuImage.ImagePath = _fileHelper.Update(file, PathConstant.MenuImagesPath +  menuImage.ImagePath, PathConstant.MenuImagesPath);
+			menuImage.ImagePath = _fileHelper.Update(file, PathConstant.MenuImagesPath + menuImage.ImagePath, PathConstant.MenuImagesPath);
 			_menuImageDal.Update(menuImage);
-			return new SuccessResult("Menü resmi güncellendi");
+			var data = _menuImageDal.Get(m => m.Id == menuImage.Id);
+			return new SuccessDataResult<MenuImage>(data, "Menü resmi güncellendi");
 		}
 	}
 }

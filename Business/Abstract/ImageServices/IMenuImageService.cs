@@ -9,9 +9,8 @@ namespace Business.Abstract.ImageServices
 		IDataResult<List<MenuImage>> GetAll();
 		IDataResult<MenuImage> GetByImageId(int id);
 		IDataResult<MenuImage> GetImageByMenuId(int menuId);
-		IResult Add(IFormFile file, MenuImage menuImage);
-		IResult Update(IFormFile file, MenuImage menuImage);
+		IDataResult<MenuImage> Add(IFormFile file, MenuImage menuImage);
+		IDataResult<MenuImage> Update(IFormFile file, MenuImage menuImage);
 		IResult Remove(MenuImage menuImage);
-		IResult AddMenuEntity(MenuImage menuImage);
 	}
 }

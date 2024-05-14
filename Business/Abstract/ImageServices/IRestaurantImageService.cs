@@ -9,8 +9,8 @@ namespace Business.Abstract.ImageServices
 		IDataResult<List<RestaurantImage>> GetAll();
 		IDataResult<RestaurantImage> GetByImageId(int id);
 		IDataResult<RestaurantImage> GetImageByRestaurantId(int restaurantId);
-		IResult Add(IFormFile file, RestaurantImage restaurantImage);
-		IResult Update(IFormFile file, RestaurantImage restaurantImage);
+		IDataResult<RestaurantImage> Add(IFormFile file, RestaurantImage restaurantImage);
+		IDataResult<RestaurantImage> Update(IFormFile file, RestaurantImage restaurantImage);
 		IResult Remove(RestaurantImage restaurantImage);
 	}
 }

@@ -45,7 +45,7 @@ public class SqlContext : DbContext
 
 		////menu and product
 		//modelBuilder.Entity<ProductMenu>()
-	 //  .HasKey(pm => new { pm.ProductId, pm.MenuId });
+		//  .HasKey(pm => new { pm.ProductId, pm.MenuId });
 
 	}
 }

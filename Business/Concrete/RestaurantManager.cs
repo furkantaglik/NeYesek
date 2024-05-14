@@ -2,7 +2,6 @@
 using Core.Entities.Concrete;
 using Core.Utilites.Results;
 using DataAccess.Abstract;
-using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete.DTOs.RestaurantDto;
 
 namespace Business.Concrete;

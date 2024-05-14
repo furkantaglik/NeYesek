@@ -4,6 +4,7 @@ using Core.Entities.Concrete;
 using Core.Utilites.FileHelper;
 using Core.Utilites.Results;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
 using Microsoft.AspNetCore.Http;
 
 namespace Business.Concrete.ImageManagers
@@ -18,12 +19,13 @@ namespace Business.Concrete.ImageManagers
 			_fileHelper = fileHelper;
 		}
 
-		public IResult Add(IFormFile file, ProductImage productImage)
+		public IDataResult<ProductImage> Add(IFormFile file, ProductImage productImage)
 		{
 
 			productImage.ImagePath = _fileHelper.Upload(file, PathConstant.ProductImagesPath);
 			_productImageDal.Add(productImage);
-			return new SuccessResult("ürün resmi eklendi");
+			var data = _productImageDal.Get(p => p.Id == productImage.Id);
+			return new SuccessDataResult<ProductImage>("ürün resmi eklendi");
 		}
 
 		public IDataResult<ProductImage> GetImageByProductId(int productId)
@@ -48,11 +50,12 @@ namespace Business.Concrete.ImageManagers
 			return new SuccessResult("Ürün resmi silindi");
 		}
 
-		public IResult Update(IFormFile file, ProductImage productImage)
+		public IDataResult<ProductImage> Update(IFormFile file, ProductImage productImage)
 		{
 			productImage.ImagePath = _fileHelper.Update(file, PathConstant.ProductImagesPath + productImage.ImagePath, PathConstant.ProductImagesPath);
 			_productImageDal.Update(productImage);
-			return new SuccessResult("Ürün resmi güncellendi");
+			var data = _productImageDal.Get(p => p.Id == productImage.Id);
+			return new SuccessDataResult<ProductImage>(data,"Ürün resmi güncellendi");
 		}
 	}
 }

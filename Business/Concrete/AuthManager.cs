@@ -3,6 +3,7 @@ using Core.Entities.Concrete;
 using Core.Utilites.Results;
 using Core.Utilites.Security.Hashing;
 using Core.Utilites.Security.Jwt;
+using DataAccess.Abstract;
 using Entities.Concrete.DTOs.RestaurantDto;
 using Entities.Concrete.DTOs.UserDto;
 
@@ -73,7 +74,6 @@ public class AuthManager : IAuthService
 			PasswordHash = passwordHash,
 			PasswordSalt = passwordSalt,
 			Status = true
-
 		};
 		_restaurantService.Add(restaurant);
 		return new SuccessDataResult<Restaurant>(restaurant, "Kayıt olundu");

@@ -18,12 +18,14 @@ namespace Business.Concrete.ImageManagers
 			_fileHelper = fileHelper;
 		}
 
-		public IResult Add(IFormFile file, RestaurantImage restaurantImage)
+		public IDataResult<RestaurantImage> Add(IFormFile file, RestaurantImage restaurantImage)
 		{
 
 			restaurantImage.ImagePath = _fileHelper.Upload(file, PathConstant.RestaurantImagesPath);
 			_restaurantImageDal.Add(restaurantImage);
-			return new SuccessResult("Restoran resmi eklendi");
+			var data = _restaurantImageDal.Get(r => r.Id == restaurantImage.Id);
+			return new SuccessDataResult<RestaurantImage>(data, "Restoran resmi eklendi");
+
 		}
 
 		public IDataResult<RestaurantImage> GetImageByRestaurantId(int restaurantId)
@@ -48,11 +50,12 @@ namespace Business.Concrete.ImageManagers
 			return new SuccessResult("Restoran resmi silindi");
 		}
 
-		public IResult Update(IFormFile file, RestaurantImage restaurantImage)
+		public IDataResult<RestaurantImage> Update(IFormFile file, RestaurantImage restaurantImage)
 		{
 			restaurantImage.ImagePath = _fileHelper.Update(file, PathConstant.RestaurantImagesPath + restaurantImage.ImagePath, PathConstant.RestaurantImagesPath);
 			_restaurantImageDal.Update(restaurantImage);
-			return new SuccessResult("Restoran resmi güncellendi");
+			var data = _restaurantImageDal.Get(r => r.Id == restaurantImage.Id);
+			return new SuccessDataResult<RestaurantImage>(data, "Restoran resmi güncellendi");
 		}
 	}
 }

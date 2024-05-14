@@ -1,5 +1,4 @@
 ﻿using Business.Abstract;
-using Business.Abstract.ImageServices;
 using Core.Entities.Concrete;
 using Core.Utilites.Results;
 using DataAccess.Abstract;

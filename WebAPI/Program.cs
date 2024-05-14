@@ -1,14 +1,11 @@
 using Autofac;
-using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using Business.DependencyResolvers.Autofac;
-using Core.Extensions;
 using Core.Utilites.Security.Encryption;
 using Core.Utilites.Security.Jwt;
 using DataAccess.Concrete.EntityFramework.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text.Json.Serialization;
 
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,7 +1,6 @@
 ﻿using Business.Abstract.ImageServices;
 using Core.Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 
 namespace WebAPI.Controllers.ImageControllers

@@ -4,6 +4,7 @@ using Core.Entities.Concrete;
 using Core.Utilites.FileHelper;
 using Core.Utilites.Results;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
 using Microsoft.AspNetCore.Http;
 
 namespace Business.Concrete.ImageManagers
@@ -18,12 +19,13 @@ namespace Business.Concrete.ImageManagers
 			_fileHelper = fileHelper;
 		}
 
-		public IResult Add(IFormFile file, CategoryImage categoryImage)
+		public IDataResult<CategoryImage> Add(IFormFile file, CategoryImage categoryImage)
 		{
 
 			categoryImage.ImagePath = _fileHelper.Upload(file, PathConstant.CategoryImagesPath);
 			_categoryImageDal.Add(categoryImage);
-			return new SuccessResult("Kategori resmi eklendi");
+			var data = _categoryImageDal.Get(c => c.Id == categoryImage.Id);
+			return new SuccessDataResult<CategoryImage>(data, "Kategori resmi eklendi");
 		}
 
 		public IDataResult<CategoryImage> GetImageByCategoryId(int categoryId)
@@ -48,11 +50,12 @@ namespace Business.Concrete.ImageManagers
 			return new SuccessResult("Kategori resmi silindi");
 		}
 
-		public IResult Update(IFormFile file, CategoryImage categoryImage)
+		public IDataResult<CategoryImage> Update(IFormFile file, CategoryImage categoryImage)
 		{
 			categoryImage.ImagePath = _fileHelper.Update(file, PathConstant.CategoryImagesPath + categoryImage.ImagePath, PathConstant.CategoryImagesPath);
 			_categoryImageDal.Update(categoryImage);
-			return new SuccessResult("Kategori resmi güncellendi");
+			var data = _categoryImageDal.Get(c => c.Id == categoryImage.Id);
+			return new SuccessDataResult<CategoryImage>(data, "Kategori resmi güncellendi");
 		}
 	}
 }
