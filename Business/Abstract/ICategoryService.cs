@@ -13,7 +13,7 @@ public interface ICategoryService
 
 	IDataResult<List<Category>> GetAll();
 	IDataResult<Category> GetById(int Id);
-	IResult Add(Category category);
+	IDataResult<Category> Add(Category category);
 	IResult Remove(Category category);
 	IResult Update(Category category);
 }

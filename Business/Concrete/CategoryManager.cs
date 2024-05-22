@@ -1,8 +1,13 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using AutoMapper.Configuration.Annotations;
+using Business.Abstract;
 using Core.Entities.Concrete;
 using Core.Utilites.Results;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
+using DataAccess.Concrete.EntityFramework.Context;
 using Entities.Concrete.DTOs.CategoryDto;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concrete;
 
@@ -10,22 +15,36 @@ public class CategoryManager : ICategoryService
 {
 	ICategoryDal _categoryDal;
 	ICategoryImageDal _categoryImageDal;
-	public CategoryManager(ICategoryDal categoryDal, ICategoryImageDal categoryImageDal)
+	IRestaurantDal _restaurantDal;
+	private readonly IRestaurantService _restaurantService;
+	private readonly IMapper _mapper;
+	public CategoryManager(ICategoryDal categoryDal, ICategoryImageDal categoryImageDal, IRestaurantDal restaurantDal, IRestaurantService restaurantService, IMapper mapper)
 	{
 		_categoryDal = categoryDal;
 		_categoryImageDal = categoryImageDal;
+		_restaurantDal = restaurantDal;
+		_restaurantService = restaurantService;
+		_mapper = mapper;
 	}
 
-	public IResult Add(Category category)
+	public IDataResult<Category> Add(Category category)
 	{
 		_categoryDal.Add(category);
+
 		if (category.CategoryImage != null)
 		{
 			category.CategoryImage.CategoryId = category.Id;
 			category.CategoryImage.Category = category;
 			_categoryImageDal.Add(category.CategoryImage);
 		}
-		return new SuccessResult("Kategori Eklendi");
+		//if (category.Restaurants != null)
+		//{
+		//	category.Restaurants[0].Categories.Add(category);
+		//	_restaurantService.Update(category.Restaurants[0]);
+		//}
+
+		return new SuccessDataResult<Category>(category,"Kategori Eklendi");
+
 	}
 
 	public IDataResult<List<Category>> GetAll()
@@ -78,6 +97,12 @@ public class CategoryManager : ICategoryService
 			category.CategoryImage.CategoryId = category.Id;
 			category.CategoryImage.Category = category;
 			_categoryImageDal.Add(category.CategoryImage);
+		}
+		if(category.Restaurants != null)
+		{
+			category.Restaurants.Add(category.Restaurants[0]);
+			_restaurantDal.Update(category.Restaurants[0]);
+		
 		}
 		return new SuccessResult("Kategori Güncellendi");
 	}

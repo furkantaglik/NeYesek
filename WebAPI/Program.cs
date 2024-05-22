@@ -6,6 +6,9 @@ using Core.Utilites.Security.Jwt;
 using DataAccess.Concrete.EntityFramework.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Core.Extensions;
+using Entities.Mapping;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +17,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<SqlContext>();
+
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 			   .ConfigureContainer<ContainerBuilder>(builder =>
@@ -37,6 +41,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 				  };
 			  });
 
+builder.Services.AddAutoMapper(typeof(EntitiesAutoMapperProfile));
+
 //builder.Services.AddControllers().AddJsonOptions(x =>
 //   x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
 
@@ -49,7 +55,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
 
-//app.ConfigureCustomExceptionMiddleware();
+app.ConfigureCustomExceptionMiddleware();
 
 app.UseStaticFiles();
 

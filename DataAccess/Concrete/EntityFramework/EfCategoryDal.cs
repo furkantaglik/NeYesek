@@ -61,7 +61,7 @@ public class EfCategoryDal : EfEntityRepositoryBase<Category, SqlContext>, ICate
 	{
 		using var context = new SqlContext();
 		var result = from category in context.Categories
-					 where category.Products.Any(p => p.Id == restaurantId)
+					 where category.Restaurants.Any(r => r.Id == restaurantId)
 					 select new CategoryDetailDto
 					 {
 						 Restaurants = category.Restaurants.ToList(),

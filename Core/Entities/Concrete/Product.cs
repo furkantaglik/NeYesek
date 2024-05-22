@@ -1,4 +1,5 @@
 ﻿using Core.Entities.Abstract;
+using System.Text.Json.Serialization;
 
 namespace Core.Entities.Concrete
 {
@@ -13,6 +14,7 @@ namespace Core.Entities.Concrete
 		public Restaurant Restaurant { get; set; }
 		public List<Menu>? Menus { get; set; }
 		public List<ProductMenu>? ProductMenus { get; set; }
+		[JsonIgnore]
 		public ProductImage? ProductImage { get; set; }
 
 
