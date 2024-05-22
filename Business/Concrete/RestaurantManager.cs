@@ -9,22 +9,14 @@ namespace Business.Concrete;
 public class RestaurantManager : IRestaurantService
 {
 	IRestaurantDal _restaurantDal;
-	IRestaurantImageDal _restaurantImageDal;
-	public RestaurantManager(IRestaurantDal restaurantDal, IRestaurantImageDal restaurantImageDal)
+	public RestaurantManager(IRestaurantDal restaurantDal)
 	{
 		_restaurantDal = restaurantDal;
-		_restaurantImageDal = restaurantImageDal;
 	}
 
 	public IResult Add(Restaurant restaurant)
 	{
 		_restaurantDal.Add(restaurant);
-		if (restaurant.RestaurantImage != null)
-		{
-			restaurant.RestaurantImage.RestaurantId = restaurant.Id;
-			restaurant.RestaurantImage.Restaurant = restaurant;
-			_restaurantImageDal.Add(restaurant.RestaurantImage);
-		}
 		return new SuccessResult("Restoran eklendi");
 	}
 
@@ -72,12 +64,6 @@ public class RestaurantManager : IRestaurantService
 	public IResult Update(Restaurant restaurant)
 	{
 		_restaurantDal.Update(restaurant);
-		if (restaurant.RestaurantImage != null)
-		{
-			restaurant.RestaurantImage.RestaurantId = restaurant.Id;
-			restaurant.RestaurantImage.Restaurant = restaurant;
-			_restaurantImageDal.Add(restaurant.RestaurantImage);
-		}
 		return new SuccessResult("Restoran güncellendi");
 	}
 }

@@ -9,23 +9,15 @@ namespace Business.Concrete;
 public class ProductManager : IProductService
 {
 	IProductDal _productDal;
-	IProductImageDal _productImageDal;
 
-	public ProductManager(IProductDal productDal, IProductImageDal productImageDal)
+	public ProductManager(IProductDal productDal)
 	{
 		_productDal = productDal;
-		_productImageDal = productImageDal;
 	}
 
 	public IResult Add(Product product)
 	{
 		_productDal.Add(product);
-		if (product.ProductImage != null)
-		{
-			product.ProductImage.ProductId = product.Id;
-			product.ProductImage.Product = product;
-			_productImageDal.Add(product.ProductImage);
-		}
 		return new SuccessResult("Ürün eklendi");
 	}
 
@@ -43,7 +35,6 @@ public class ProductManager : IProductService
 
 	public IDataResult<List<Product>> GetByCategoryId(int categoryId)
 	{
-		//sorgu productDal'a taşınacak  !!!
 		var data = _productDal.GetAll(p => p.Categories.Any(c => c.Id == categoryId));
 		return new SuccessDataResult<List<Product>>(data);
 	}
@@ -56,7 +47,6 @@ public class ProductManager : IProductService
 
 	public IDataResult<List<Product>> GetByRestaurantId(int restaurantId)
 	{
-		//sorgu productDal'a taşınabilir
 		var data = _productDal.GetAll(p => p.Restaurant.Id == restaurantId);
 		return new SuccessDataResult<List<Product>>(data);
 	}
@@ -82,12 +72,6 @@ public class ProductManager : IProductService
 	public IResult Update(Product product)
 	{
 		_productDal.Update(product);
-		if (product.ProductImage != null)
-		{
-			product.ProductImage.ProductId = product.Id;
-			product.ProductImage.Product = product;
-			_productImageDal.Add(product.ProductImage);
-		}
 		return new SuccessResult("Ürün güncellendi");
 	}
 }

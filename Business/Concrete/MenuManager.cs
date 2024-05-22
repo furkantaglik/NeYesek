@@ -9,22 +9,14 @@ namespace Business.Concrete;
 public class MenuManager : IMenuService
 {
 	IMenuDal _menuDal;
-	IMenuImageDal _menuImageDal;
-	public MenuManager(IMenuDal menuDal, IMenuImageDal menuImageDal)
+	public MenuManager(IMenuDal menuDal)
 	{
 		_menuDal = menuDal;
-		_menuImageDal = menuImageDal;
 	}
 
 	public IResult Add(Menu menu)
 	{
 		_menuDal.Add(menu);
-		if (menu.MenuImage != null)
-		{
-			menu.MenuImage.MenuId = menu.Id;
-			menu.MenuImage.Menu = menu;
-			_menuImageDal.Add(menu.MenuImage);
-		}
 		return new SuccessResult("Menü eklendi");
 	}
 
@@ -68,12 +60,6 @@ public class MenuManager : IMenuService
 	public IResult Update(Menu menu)
 	{
 		_menuDal.Update(menu);
-		if (menu.MenuImage != null)
-		{
-			menu.MenuImage.MenuId = menu.Id;
-			menu.MenuImage.Menu = menu;
-			_menuImageDal.Add(menu.MenuImage);
-		}
 		return new SuccessResult("Menü Güncellendi");
 	}
 }
