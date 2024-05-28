@@ -10,4 +10,5 @@ public interface ICategoryDal : IEntityRepository<Category>
 	CategoryDetailDto GetCategoryDetail(int categoryId);
 	List<CategoryDetailDto> GetCategoryDetailsByRestaurant(int restaurantId);
 	List<CategoryDetailDto> GetCategoryDetailsByProduct(int productId);
+	Category AddCategoryToRestaurant(int categoryId,int restaurantId);
 }

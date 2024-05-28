@@ -14,9 +14,11 @@ namespace Business.Concrete;
 public class CategoryManager : ICategoryService
 {
 	ICategoryDal _categoryDal;
-	public CategoryManager(ICategoryDal categoryDal)
+	IRestaurantDal _restaurantDal;
+	public CategoryManager(ICategoryDal categoryDal ,IRestaurantDal restaurantDal)
 	{
 		_categoryDal = categoryDal;
+		_restaurantDal = restaurantDal;
 	}
 
 	public IDataResult<Category> Add(Category category)
@@ -70,6 +72,9 @@ public class CategoryManager : ICategoryService
 	public IResult Update(Category category)
 	{
 		_categoryDal.Update(category);
+		_categoryDal.AddCategoryToRestaurant(category.Id, category.Restaurants[0].Id);
 		return new SuccessResult("Kategori Güncellendi");
+
+
 	}
 }

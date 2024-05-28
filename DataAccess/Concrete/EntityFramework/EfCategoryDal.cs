@@ -3,11 +3,33 @@ using Core.Entities.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework.Context;
 using Entities.Concrete.DTOs.CategoryDto;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concrete.EntityFramework;
 
 public class EfCategoryDal : EfEntityRepositoryBase<Category, SqlContext>, ICategoryDal
 {
+	public Category AddCategoryToRestaurant(int categoryId, int restaurantId)
+	{
+		using (var context = new SqlContext())
+		{
+			var category = context.Categories.Include(c => c.Restaurants).FirstOrDefault(c => c.Id == categoryId);
+			var restaurant = context.Restaurants.FirstOrDefault(r => r.Id == restaurantId);
+			if (category.Restaurants.Any(r => r.Id == restaurantId))
+			{
+				category.Restaurants.Remove(restaurant);
+			}
+			else
+			{
+				category.Restaurants.Add(restaurant);
+			}
+			context.SaveChanges();
+			return category;
+		}
+	}
+
+
+
 	public List<CategoryDetailDto> GetAllCategoryDetails()
 	{
 		using var context = new SqlContext();
